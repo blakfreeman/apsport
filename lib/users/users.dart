@@ -28,7 +28,3 @@ class User {
     );
   }
 }
-
-class Coach {}
-
-class Club {}

@@ -8,6 +8,8 @@ import 'package:aptus/screens/near_me.dart';
 import 'package:aptus/screens/profiles.dart';
 import 'package:aptus/screens/search.dart';
 import 'package:flutter/material.dart';
+import 'package:aptus/screens/home2.dart';
+import 'package:aptus/screens/home3.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,19 +23,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Color(0xFF542581), accentColor: Colors.blueAccent),
-      initialRoute: Home.id,
+      initialRoute: Home3.id,
       routes: {
-        Home.id: (context) => Home(),
+        Home3.id: (context) => Home3(),
         LoginPage.id: (context) => LoginPage(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         NearMe.id: (context) => NearMe(),
-        'registration': (context) => RegistrationScreen(),
-        'edit_profil': (context) => EditProfile(),
-        'chat': (context) => Chat(),
-        'event': (context) => Event(),
-        'near_me': (context) => NearMe(),
-        'profiles': (context) => Profiles(),
-        'search': (context) => Search(),
+        Home2.id: (context) => Home2(),
       },
     );
   }

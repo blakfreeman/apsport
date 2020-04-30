@@ -1,31 +1,15 @@
-import 'package:aptus/screens/edit_profile.dart';
-import 'package:aptus/screens/near_me.dart';
-import 'package:aptus/screens/search.dart';
+import 'package:aptus/screens/home2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:aptus/screens/event.dart';
-import 'package:aptus/screens/chat.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/screens/registration.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aptus/users/users.dart';
-
-final GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: [
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
-final StorageReference storageRef = FirebaseStorage.instance.ref();
-final usersRef = Firestore.instance.collection('Player');
-final DateTime timestamp = DateTime.now();
-User currentUser;
 
 class Home extends StatefulWidget {
   static const String id = 'home';
@@ -35,130 +19,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final usersRef = Firestore.instance.collection('users');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final StorageReference storageRef = FirebaseStorage.instance.ref();
+  final DateTime timestamp = DateTime.now();
+  final databaseReference = Firestore.instance;
+
   bool _isAuth = false;
   PageController pageController;
   int pageIndex = 0;
   String email;
   String password;
-  final _auth = FirebaseAuth.instance;
-
   bool showSpinner = false;
+  User currentUser;
 
-  @override
-  void initState() {
-    super.initState();
-    pageController = PageController();
-    // Detects when user signed in
-    _googleSignIn.onCurrentUserChanged.listen((account) {
-      _handleSignIn();
-    }, onError: (err) {
-      print('Error signing in: $err');
-    });
-    // Reauthenticate user when app is opened
-    _googleSignIn.signInSilently(suppressErrors: false).then((account) {
-      _handleSignIn();
-    }).catchError((err) {
-      print('Error signing in: $err');
-    });
-  }
-
-  Future<void> _handleSignIn() async {
-    try {
-      await _googleSignIn.signIn();
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  createUserInFireStore() async {
-    // 1) check if user exists in users collection in database (according to their id)
-    final GoogleSignInAccount user = _googleSignIn.currentUser;
-    DocumentSnapshot doc = await usersRef.document(user.id).get();
-
-    if (!doc.exists) {
-      // 2) if the user doesn't exist, then we want to take them to the create account page
-      final username =
-          await Navigator.pushNamed(context, RegistrationScreen.id);
-
-      // 3) get username from create account, use it to make new user document in users collection
-      usersRef.document(user.id).setData({
-        "id": user.id,
-        "username": username,
-        "photoUrl": user.photoUrl,
-        "email": user.email,
-        "displayName": user.displayName,
-        "bio": "",
-        "timestamp": timestamp
-      });
-
-      doc = await usersRef.document(user.id).get();
-    }
-
-    currentUser = User.fromDocument(doc);
-  }
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
-  }
-
-  login() {
-    _googleSignIn.signIn();
-  }
-
-  logout() {
-    _googleSignIn.signOut();
-  }
-
-  onPageChanged(int pageIndex) {
-    setState(() {
-      this.pageIndex = pageIndex;
-    });
-  }
-
-  onTap(int pageIndex) {
-    pageController.animateToPage(pageIndex,
-        duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
-  }
-
-  Scaffold buildAuthScreen() {
-    return Scaffold(
-      body: PageView(
-        children: <Widget>[
-          NearMe(),
-          Search(),
-          Event(),
-          Chat(),
-          EditProfile(),
-        ],
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        physics: NeverScrollableScrollPhysics(),
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        currentIndex: pageIndex,
-        onTap: onTap,
-        activeColor: Theme.of(context).primaryColor,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event_available),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-          ),
-        ],
-      ),
-    );
+  Widget buildAuthScreen() {
+    return Home2();
   }
 
   Widget buildUnAuthScreen() {
@@ -221,10 +97,6 @@ class _HomeState extends State<Home> {
                             ),
                             hintText: 'Enter your email'),
                       ),
-                      Divider(
-                        color: Colors.white,
-                        thickness: 2.0,
-                      ),
                       TextField(
                         style: TextStyle(color: Colors.white),
                         obscureText: true,
@@ -238,10 +110,6 @@ class _HomeState extends State<Home> {
                               color: Colors.black,
                             ),
                             hintText: 'Password'),
-                      ),
-                      Divider(
-                        color: Colors.white,
-                        thickness: 2.0,
                       ),
                       Container(
                         padding: EdgeInsets.only(left: 50.0, right: 50.0),
@@ -271,7 +139,6 @@ class _HomeState extends State<Home> {
                                 if (user != null) {
                                   setState(() {
                                     _isAuth = true;
-                                    return buildAuthScreen();
                                   });
                                 }
 
@@ -299,34 +166,7 @@ class _HomeState extends State<Home> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: login,
-                            child: Container(
-                              width: 50,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/icons8-google-48.png'),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 15.0),
-                          GestureDetector(
-                            child: Container(
-                              width: 50,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/icons8-facebook-circled-48.png'),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        children: <Widget>[],
                       ),
                     ],
                   ),
