@@ -5,6 +5,7 @@ import 'package:aptus/services/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aptus/users/users.dart';
 import 'package:aptus/screens/home2.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -59,11 +60,20 @@ class _SearchState extends State<Search> {
             RoundedButtonLarge(
               title: 'Recherche',
               colour: Colors.blueAccent,
-              onPressed: null,
+              onPressed: createRecord,
             ),
           ],
         ),
       ),
     );
   }
+}
+
+final databaseReference = Firestore.instance;
+
+void createRecord() async {
+  await databaseReference.collection("user").document("1").setData({
+    'title': 'Mastering Flutter',
+    'description': 'Programming Guide for Dart'
+  });
 }

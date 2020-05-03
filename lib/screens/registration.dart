@@ -29,7 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final databaseReference = Firestore.instance;
   final DateTime timestamp = DateTime.now();
-  final usersRef = Firestore.instance.collection('user');
+  final usersRef = Firestore.instance.collection('users');
 
   bool showSpinner = false;
   String email;
@@ -91,7 +91,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   submit() async {
     try {
-      final form = _formKey.currentState;
+      final form = _formKey.currentState; //
       if (form.validate()) {
         form.save();
       } else {
@@ -105,9 +105,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       print(email + password);
 
       if (newUser != null) {
-        setState(() {
-          createUserInFireStore();
-        });
         SnackBar snackBar = SnackBar(content: Text("Welcome $username!"));
         _scaffoldKey.currentState.showSnackBar(snackBar);
         Timer(Duration(seconds: 2), () {
