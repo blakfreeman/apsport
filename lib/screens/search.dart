@@ -57,7 +57,7 @@ class _SearchState extends State<Search> {
                 ),
               ),
             ),
-            RoundedButtonLarge(
+            OurRoundedButtonLarge(
               title: 'Recherche',
               colour: Colors.blueAccent,
               onPressed: createRecord,

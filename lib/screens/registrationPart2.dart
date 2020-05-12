@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter/material.dart';
-import 'package:aptus/services/liste.dart';
+import 'package:aptus/services/sport_list.dart';
 import 'dart:async';
 
 //this is in case wee need a full customer registration.

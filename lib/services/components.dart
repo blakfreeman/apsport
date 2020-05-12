@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:aptus/services/constants.dart';
 
-class RoundedButton extends StatelessWidget {
-  RoundedButton({this.title, this.colour, @required this.onPressed});
+class OurRoundedButton extends StatelessWidget {
+  OurRoundedButton({this.title, this.colour, @required this.onPressed});
 
   final Color colour;
   final String title;
@@ -32,8 +32,8 @@ class RoundedButton extends StatelessWidget {
   }
 }
 
-class RoundedButtonLarge extends StatelessWidget {
-  RoundedButtonLarge({this.title, this.colour, @required this.onPressed});
+class OurRoundedButtonLarge extends StatelessWidget {
+  OurRoundedButtonLarge({this.title, this.colour, @required this.onPressed});
 
   final Color colour;
   final String title;
@@ -63,8 +63,8 @@ class RoundedButtonLarge extends StatelessWidget {
   }
 }
 
-class ReusableCard extends StatelessWidget {
-  ReusableCard({@required this.colour, this.cardChild, this.onPress});
+class OurReusableCard extends StatelessWidget {
+  OurReusableCard({@required this.colour, this.cardChild, this.onPress});
 
   final Color colour;
   final Widget cardChild;
@@ -86,8 +86,8 @@ class ReusableCard extends StatelessWidget {
   }
 }
 
-class IconContent extends StatelessWidget {
-  IconContent({
+class OurIconContent extends StatelessWidget {
+  OurIconContent({
     this.icon,
     this.label,
   });
@@ -116,8 +116,9 @@ class IconContent extends StatelessWidget {
   }
 }
 
-class RoundIconButton extends StatelessWidget {
-  RoundIconButton({@required this.icon, @required this.onPressed, this.colour});
+class OurRoundIconButton extends StatelessWidget {
+  OurRoundIconButton(
+      {@required this.icon, @required this.onPressed, this.colour});
 
   final IconData icon;
   final Function onPressed;
@@ -138,8 +139,8 @@ class RoundIconButton extends StatelessWidget {
   }
 }
 
-class BottomButton extends StatelessWidget {
-  BottomButton({@required this.onTap, @required this.buttonTitle});
+class OurBottomButton extends StatelessWidget {
+  OurBottomButton({@required this.onTap, @required this.buttonTitle});
 
   final Function onTap;
   final String buttonTitle;
@@ -161,6 +162,35 @@ class BottomButton extends StatelessWidget {
         width: double.infinity,
         height: kBottomContainerHeight,
       ),
+    );
+  }
+}
+
+class OurContainer extends StatelessWidget {
+  final Widget child;
+
+  const OurContainer({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 10.0,
+            spreadRadius: 1.0,
+            offset: Offset(
+              4.0,
+              4.0,
+            ),
+          )
+        ],
+      ),
+      child: child,
     );
   }
 }

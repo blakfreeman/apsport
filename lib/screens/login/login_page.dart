@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          RoundedButton(
+                          OurRoundedButton(
                             title: 'Login',
                             colour: Color(0xFF542581),
                             onPressed: () async {
@@ -170,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             width: 10.0,
                           ),
-                          RoundedButton(
+                          OurRoundedButton(
                             title: 'Register',
                             colour: Colors.blueAccent,
                             onPressed: () {

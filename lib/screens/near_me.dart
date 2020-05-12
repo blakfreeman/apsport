@@ -1,10 +1,9 @@
+import 'package:aptus/services/current_user_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/services/header.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
-final usersRef = Firestore.instance.collection('Player');
-FirebaseUser loggedInUser;
+import 'package:aptus/screens/root.dart';
 
 class NearMe extends StatefulWidget {
   static const String id = 'near_me';
@@ -14,31 +13,23 @@ class NearMe extends StatefulWidget {
 }
 
 class _NearMeState extends State<NearMe> {
-  final _auth = FirebaseAuth.instance;
-
-  @override
-  void initState() {
-    super.initState();
-
-    getCurrentUser();
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loggedInUser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context, isAppTitle: true),
-      body: Text('Check angela vidoe about the meteo app'),
+      body: Center(
+        child: RaisedButton(
+          child: Text('Check angela vidoe about the meteo app'),
+          onPressed: () async {
+            CurrentUser _currentUser =
+                Provider.of<CurrentUser>(context, listen: false);
+            String _returnString = await _currentUser.signOut();
+            if (_returnString == 'succes') {
+              Navigator.pushNamed(context, OurRoot.id);
+            }
+          },
+        ),
+      ),
     );
   }
 }

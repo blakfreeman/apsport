@@ -153,13 +153,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.3"
-  flutter_plugin_android_lifecycle:
-    dependency: transitive
-    description:
-      name: flutter_plugin_android_lifecycle
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -184,13 +177,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  get_it:
-    dependency: "direct main"
-    description:
-      name: get_it
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.1"
   google_api_availability:
     dependency: transitive
     description:
@@ -234,19 +220,12 @@ packages:
     source: hosted
     version: "3.1.3"
   image:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
-  image_picker:
-    dependency: "direct main"
-    description:
-      name: image_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.3+4"
   js:
     dependency: transitive
     description:
@@ -282,13 +261,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
-  observable_ish:
-    dependency: transitive
-    description:
-      name: observable_ish
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.4"
   path:
     dependency: transitive
     description:
@@ -345,13 +317,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.5"
-  provider_architecture:
-    dependency: "direct main"
-    description:
-      name: provider_architecture
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1+1"
   quiver:
     dependency: transitive
     description:
@@ -359,13 +324,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  rxdart:
-    dependency: "direct main"
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.20.0"
   sky_engine:
     dependency: transitive
     description: flutter

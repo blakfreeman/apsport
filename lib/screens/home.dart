@@ -83,49 +83,45 @@ class _HomeState extends State<Home> {
                       SizedBox(
                         height: 90.0,
                       ),
-                      TextField(
-                        style: TextStyle(color: Colors.white),
-                        keyboardType: TextInputType.emailAddress,
-                        textAlign: TextAlign.left,
-                        onChanged: (value) {
-                          email = value;
-                        },
-                        decoration: kTextFieldDecoration.copyWith(
-                            icon: Icon(
-                              Icons.email,
-                              color: Colors.black,
+                      Expanded(
+                        child: ListView(
+                          children: <Widget>[
+                            TextField(
+                              style: TextStyle(color: Colors.white),
+                              keyboardType: TextInputType.emailAddress,
+                              textAlign: TextAlign.left,
+                              onChanged: (value) {
+                                email = value;
+                              },
+                              decoration: kTextFieldDecoration.copyWith(
+                                  icon: Icon(
+                                    Icons.email,
+                                    color: Colors.black,
+                                  ),
+                                  hintText: 'Enter your email'),
                             ),
-                            hintText: 'Enter your email'),
-                      ),
-                      TextField(
-                        style: TextStyle(color: Colors.white),
-                        obscureText: true,
-                        textAlign: TextAlign.left,
-                        onChanged: (value) {
-                          password = value;
-                        },
-                        decoration: kTextFieldDecoration.copyWith(
-                            icon: Icon(
-                              Icons.lock,
-                              color: Colors.black,
+                            TextField(
+                              style: TextStyle(color: Colors.white),
+                              obscureText: true,
+                              textAlign: TextAlign.left,
+                              onChanged: (value) {
+                                password = value;
+                              },
+                              decoration: kTextFieldDecoration.copyWith(
+                                  icon: Icon(
+                                    Icons.lock,
+                                    color: Colors.black,
+                                  ),
+                                  hintText: 'Password'),
                             ),
-                            hintText: 'Password'),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 50.0, right: 50.0),
-                        child: Text(
-                          "Pleas sign up if you don't have any account",
-                          style: TextStyle(
-                              color: Colors.white70,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: 'DM Sans'),
+                          ],
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          RoundedButton(
+                          OurRoundedButton(
                             title: 'Login',
                             colour: Color(0xFF542581),
                             onPressed: () async {
@@ -153,7 +149,7 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             width: 10.0,
                           ),
-                          RoundedButton(
+                          OurRoundedButton(
                             title: 'Register',
                             colour: Colors.blueAccent,
                             onPressed: () {

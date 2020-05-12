@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "982260059384",
-    "firebase_url": "https://aptus-c84fd.firebaseio.com",
-    "project_id": "aptus-c84fd",
-    "storage_bucket": "aptus-c84fd.appspot.com"
+    "project_number": "60150808344",
+    "firebase_url": "https://aptus-9df13.firebaseio.com",
+    "project_id": "aptus-9df13",
+    "storage_bucket": "aptus-9df13.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:982260059384:android:0e4770f05707d9e94b7f0d",
+        "mobilesdk_app_id": "1:60150808344:android:6d86124f9f41740165686d",
         "android_client_info": {
           "package_name": "be.aptussport.aptus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "982260059384-6kd2g8ja6f3htnu1ol73rmr4uo888kso.apps.googleusercontent.com",
+          "client_id": "60150808344-s5crfj7kmajlpnviqlvviso0suhdu5h4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAD74eTg9gN8CV-PncUK-Qrf7ib8mwbGz0"
+          "current_key": "AIzaSyAKYTyJPV_0SqrNUqr9j53MXGhlqU0tYqU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "982260059384-6kd2g8ja6f3htnu1ol73rmr4uo888kso.apps.googleusercontent.com",
+              "client_id": "60150808344-s5crfj7kmajlpnviqlvviso0suhdu5h4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,12 +1,16 @@
+import 'package:aptus/screens/SplashScreen.dart';
 import 'package:aptus/screens/chat.dart';
 import 'package:aptus/screens/edit_profile.dart';
 import 'package:aptus/screens/event.dart';
 import 'package:aptus/screens/home.dart';
-import 'package:aptus/screens/login_page.dart';
+import 'package:aptus/screens/login/login.dart';
+import 'package:aptus/screens/login/login_page.dart';
 import 'package:aptus/screens/registration.dart';
 import 'package:aptus/screens/near_me.dart';
 import 'package:aptus/screens/profiles.dart';
+import 'package:aptus/screens/root.dart';
 import 'package:aptus/screens/search.dart';
+import 'package:aptus/services/Ourtheme.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/home2.dart';
 
@@ -20,10 +24,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'APTUS',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: Color(0xFF542581), accentColor: Colors.blueAccent),
-      initialRoute: Home.id,
+      theme: OurTheme().buildTheme(),
+      initialRoute: OurRoot.id,
       routes: {
+        //maybe I'll change the way we initiate the route
+        OurRoot.id: (context) => OurRoot(),
+        LoginScreen.id: (context) => LoginScreen(),
+        OurSplashScreen.id: (context) => OurSplashScreen(),
         Home.id: (context) => Home(),
         LoginPage.id: (context) => LoginPage(),
         RegistrationScreen.id: (context) => RegistrationScreen(),

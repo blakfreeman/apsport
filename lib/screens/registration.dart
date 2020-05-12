@@ -7,7 +7,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:aptus/screens/home2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:aptus/services/liste.dart';
+import 'package:aptus/services/sport_list.dart';
 import 'package:aptus/users/users.dart';
 import 'dart:async';
 
@@ -30,6 +30,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final databaseReference = Firestore.instance;
   final DateTime timestamp = DateTime.now();
   final usersRef = Firestore.instance.collection('users');
+  final db = Firestore.instance;
 
   bool showSpinner = false;
   String email;
@@ -358,7 +359,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               style: TextStyle(color: Colors.white),
                               textAlign: TextAlign.left,
                               controller: _controllerMyReason,
-                              onSaved: (val) => motivation = val,
+                              onSaved: (val) => motivation =
+                                  val, // it seems that my code is wrong here
                               decoration: kTextFieldDecoration.copyWith(
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -394,10 +396,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        RoundedButtonLarge(
+                        OurRoundedButtonLarge(
                           title: 'Register',
                           colour: Colors.blueAccent,
-                          onPressed: createUserInFireStore,
+                          onPressed: submit,
                         ),
                       ],
                     ),
