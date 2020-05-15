@@ -1,13 +1,14 @@
 import 'package:aptus/model/users.dart';
+import 'package:aptus/screens/sign_up/sign_up_form.dart';
 import 'package:aptus/services/data_base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 class CurrentUser extends ChangeNotifier {
-  OurUser _currentUser = OurUser();
+  OurPlayer _currentUser = OurPlayer();
 
-  OurUser get getCurrentUser => _currentUser;
+  OurPlayer get getCurrentUser => _currentUser;
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -33,7 +34,7 @@ class CurrentUser extends ChangeNotifier {
 
     try {
       await _auth.signOut();
-      _currentUser = OurUser();
+      _currentUser = OurPlayer();
       retVal = "success";
     } catch (e) {
       print(e);
@@ -42,16 +43,20 @@ class CurrentUser extends ChangeNotifier {
   }
 
   Future<String> signUpUser(
-      String email, String password, String fullName) async {
+      String email, String password, String username, String sport, String level, String motivation) async {
     String retVal = "error";
-    OurUser _user = OurUser();
+    OurPlayer _user = OurPlayer();
     try {
       AuthResult _authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       _user.uid = _authResult.user.uid;
       _user.email = _authResult.user.email;
-      _user.fullName = fullName;
-      String _returnString = await OurDatabase().createUser(_user);
+      _user.username = username;
+      _user.sport = sport;
+      _user.level = level;
+      _user.motivation = motivation;
+
+      String _returnString = await OurDatabase().createPlayer(_user);
       if (_returnString == "success") {
         retVal = "success";
       }

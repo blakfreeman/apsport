@@ -1,5 +1,6 @@
-import 'package:aptus/screens/registration.dart';
+import 'package:aptus/screens/sign_up/Sign_up.dart';
 import 'package:aptus/services/components.dart';
+import 'package:aptus/services/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:aptus/services/current_user_auth.dart';
@@ -61,66 +62,65 @@ class _OurLoginFormState extends State<OurLoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return OurContainer(
+    return Container(
       child: Column(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
-            child: Text(
-              "Log In",
-              style: TextStyle(
-                color: Theme.of(context).secondaryHeaderColor,
-                fontSize: 25.0,
-                fontWeight: FontWeight.bold,
-              ),
+            child: SizedBox(
+              height: 20.0,
             ),
           ),
           TextFormField(
             controller: _emailController,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.alternate_email),
-              hintText: "Email",
-            ),
+            decoration: kTextFieldDecoration.copyWith(
+                icon: Icon(
+                  Icons.email,
+                  color: Colors.black,
+                ),
+                hintText: 'Email'),
           ),
           SizedBox(
             height: 20.0,
           ),
           TextFormField(
             controller: _passwordController,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.lock_outline),
-              hintText: "Password",
-            ),
+            decoration: kTextFieldDecoration.copyWith(
+                icon: Icon(
+                  Icons.lock,
+                  color: Colors.black,
+                ),
+                hintText: 'Password'),
             obscureText: true,
           ),
           SizedBox(
-            height: 20.0,
+            height: 40.0,
           ),
-          RaisedButton(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 100),
-              child: Text(
-                "Log In",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                ),
-              ),
+          Container(
+            child: OurRoundedButtonLarge(
+
+    title: 'Login',
+    colour: Color(0xFF542581),
+
+
+              onPressed: () {
+                _loginUser(
+                    type: LoginType.email,
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    context: context);
+              },
             ),
-            onPressed: () {
-              _loginUser(
-                  type: LoginType.email,
-                  email: _emailController.text,
-                  password: _passwordController.text,
-                  context: context);
-            },
           ),
           FlatButton(
-            child: Text("Don't have an account? Sign up here"),
+            //this need to be bold or bigger
+            child: Text("Don't have an account? Sign up here",style:
+              TextStyle(fontFamily: 'DM Sans',
+              fontWeight: FontWeight.bold),),
+            textColor: Colors.white,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onPressed: () {
-              Navigator.pushNamed(context, RegistrationScreen.id);
+              Navigator.pushNamed(context, SignUpScreen.id);
             },
           ),
         ],

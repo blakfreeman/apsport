@@ -23,6 +23,8 @@ class OurRoundedButton extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
+
+                fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
@@ -46,7 +48,7 @@ class OurRoundedButtonLarge extends StatelessWidget {
       child: Material(
         elevation: 5.0,
         color: colour,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(15.0),
         child: MaterialButton(
           onPressed: onPressed,
           minWidth: 270.0,
@@ -54,6 +56,9 @@ class OurRoundedButtonLarge extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
+              fontFamily: 'DM Sans',
+              fontSize: 15.0,
+              fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
@@ -187,6 +192,31 @@ class OurContainer extends StatelessWidget {
               4.0,
               4.0,
             ),
+          )
+        ],
+      ),
+      child: child,
+    );
+  }
+}
+
+
+class OurContainerOpaque extends StatelessWidget {
+  final Widget child;
+
+  const OurContainerOpaque({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 10.0,
+            spreadRadius: 1.0,
           )
         ],
       ),

@@ -1,17 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class OurUser {
+class OurPlayer {
   String uid;
   String email;
-  String fullName;
+  String username;
+  String sport;
+  String level;
+  String motivation;
   Timestamp accountCreated;
-  String groupId;
 
-  OurUser({
+
+  OurPlayer({
     this.uid,
     this.email,
-    this.fullName,
+    this.username,
+    this.sport,
+    this.level,
+    this.motivation,
     this.accountCreated,
-    this.groupId,
+
   });
 }

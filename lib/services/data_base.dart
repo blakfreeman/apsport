@@ -4,14 +4,17 @@ import 'package:flutter/services.dart';
 
 class OurDatabase {
   final Firestore _fireStore = Firestore.instance;
-
-  Future<String> createUser(OurUser user) async {
+//Todo create the same for the coaches
+  Future<String> createPlayer(OurPlayer user) async {
     String retVal = "error";
 
     try {
       await _fireStore.collection("users").document(user.uid).setData({
-        'fullName': user.fullName,
+        'username': user.username,
         'email': user.email,
+        'sport': user.sport,
+        'level': user.level,
+        'motivation': user.motivation,
         'accountCreated': Timestamp.now(),
       });
       retVal = "success";
@@ -22,17 +25,20 @@ class OurDatabase {
     return retVal;
   }
 
-  Future<OurUser> getUserInfo(String uid) async {
-    OurUser retVal = OurUser();
+  Future<OurPlayer> getUserInfo(String uid) async {
+    OurPlayer retVal = OurPlayer();
 
     try {
       DocumentSnapshot _docSnapshot =
           await _fireStore.collection("users").document(uid).get();
       retVal.uid = uid;
-      retVal.fullName = _docSnapshot.data["fullName"];
+      retVal.username = _docSnapshot.data["username"];
       retVal.email = _docSnapshot.data["email"];
+      retVal.sport = _docSnapshot.data["sport"];
+      retVal.level = _docSnapshot.data["level"];
+      retVal.motivation = _docSnapshot.data["motivation"];
       retVal.accountCreated = _docSnapshot.data["accountCreated"];
-      retVal.groupId = _docSnapshot.data['groupId'];
+
     } catch (e) {
       print(e);
     }

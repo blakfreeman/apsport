@@ -13,6 +13,7 @@ import 'dart:async';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration';
+
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -132,12 +133,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           inAsyncCall: showSpinner,
           child: Column(
             children: <Widget>[
-              Align(
-                alignment: Alignment.topRight,
-                child: Image.asset(
-                  'assets/images/Aptus_white.png',
-                  height: 55.0,
-                ),
+              Row(
+                children: <Widget>[
+                  BackButton(
+                    color: Colors.white,
+                    //Todo I need to find a way to put this on the top right
+                  ),
+                 // Align(
+                    //alignment: Alignment.topCenter,
+                    //child: Image.asset(
+                      //'assets/images/Aptus_white.png',
+                      //height: 55.0,
+                    //),
+                 // ),
+                ],
               ),
               Container(
                 padding: EdgeInsets.all(35.0),
@@ -180,7 +189,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             onSaved: (val) => email = val,
                             onChanged: (value) {
                               email = value;
-                            }, //TODO reajouter un message d'erreur concernant ce chant
+                            },
+                            //TODO reajouter un message d'erreur concernant ce chant
                             decoration: kTextFieldDecoration.copyWith(
                                 icon: Icon(
                                   Icons.email,
@@ -359,8 +369,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               style: TextStyle(color: Colors.white),
                               textAlign: TextAlign.left,
                               controller: _controllerMyReason,
-                              onSaved: (val) => motivation =
-                                  val, // it seems that my code is wrong here
+                              onSaved: (val) => motivation = val,
+                              // it seems that my code is wrong here
                               decoration: kTextFieldDecoration.copyWith(
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -379,7 +389,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             },
                             itemBuilder: (BuildContext context) {
                               return MyReason()
-                                  .best
+                                  .reason
                                   .map<PopupMenuItem<String>>((String value) {
                                 return PopupMenuItem(
                                     child: Text(value), value: value);

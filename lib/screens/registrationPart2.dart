@@ -454,7 +454,7 @@ class _RegistrationUserHabitState extends State<RegistrationUserHabit> {
                         },
                         itemBuilder: (BuildContext context) {
                           return MyReason()
-                              .best
+                              .reason
                               .map<PopupMenuItem<String>>((String value) {
                             return PopupMenuItem(
                                 child: Text(value), value: value);

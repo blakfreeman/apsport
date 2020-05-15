@@ -13,7 +13,7 @@ const kTextFieldDecoration = InputDecoration(
   ),
   hintText: 'Enter a value',
   hintStyle: TextStyle(
-      color: Colors.grey,
+      color: Colors.white70,
       fontSize: 15.0,
       fontWeight: FontWeight.bold,
       fontFamily: 'DM Sans'),

@@ -68,7 +68,7 @@ class WeekOrWeekEnd {
 }
 
 class MyReason {
-  List<String> best = [
+  List<String> reason = [
     'To chalenge me',
     'lose weight',
     'having more enrgy',
