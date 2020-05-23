@@ -29,6 +29,8 @@ class CurrentUser extends ChangeNotifier {
     return retVal;
   }
 
+
+
   Future<String> signOut() async {
     String retVal = "error";
 

@@ -1,79 +1,167 @@
+import 'package:aptus/model/users.dart';
+import 'package:aptus/services/data_base.dart';
 import 'package:aptus/services/header.dart';
+import 'package:aptus/services/progress.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/services/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aptus/users/users.dart';
-import 'package:aptus/screens/home2.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Search extends StatefulWidget {
+  static const String id = 'search';
+
   @override
   _SearchState createState() => _SearchState();
 }
 
-class _SearchState extends State<Search> {
+class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin<Search>
+ {
   TextEditingController searchController = TextEditingController();
+  Future<QuerySnapshot> searchResultsFuture;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: header(context, isAppTitle: false, titleText: 'search'),
-      body: Container(
-        padding: EdgeInsets.all(30.0),
-        child: Column(
+  sportSearch(String str) {
+    Future<QuerySnapshot> allUsers = Firestore.instance
+        .collection('users')
+        .where('sport', isGreaterThanOrEqualTo: str)
+        .getDocuments();
+    setState(() {
+      searchResultsFuture = allUsers;
+    });
+  }
+
+  clearSearch() {
+    searchController.clear();
+  }
+
+
+//Due to a bug or maybe I don't understand it well enough, It seams that I can't align the on the top left and top right my icons, so I remove them for now (temporally)
+  AppBar buildSearchField() {
+    return AppBar(backgroundColor: Colors.blueAccent,title:
+     TextFormField(
+        controller: searchController,
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(fillColor: Colors.blueAccent,
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          hintText: "Search for a sport...",
+          hintStyle: TextStyle(color: Colors.white),
+          filled: true,
+          suffixIcon: IconButton(
+            icon: Icon(Icons.clear,
+            color: Colors.white,),
+            onPressed: clearSearch,
+          ),
+        ),
+        onFieldSubmitted: sportSearch,
+      ),
+    );
+  }
+
+
+
+
+  Container buildNoContent() {
+    final Orientation orientation = MediaQuery.of(context).orientation;
+    return Container(
+      child: Center(
+        child: ListView(
+          shrinkWrap: true,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 250.0),
-              child: Text(
-                'SPORT',
+            Column(children: <Widget>[
+              Text(
+                "No Users",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontFamily: 'DM Sans',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25.0,
-                    color: Colors.black),
-              ),
-            ),
-            TextFormField(
-              controller: searchController,
-              decoration: InputDecoration(
-                hintStyle: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'DM Sans'),
-                hintText: 'Séléctionner un sport',
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black,
-                    width: 3.0,
-                  ),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black,
-                    width: 3.0,
-                  ),
+                  color: Colors.black,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 30.0,
                 ),
               ),
-            ),
-            OurRoundedButtonLarge(
-              title: 'Recherche',
-              colour: Colors.blueAccent,
-              onPressed: createRecord,
-            ),
+            ],),
+
           ],
         ),
       ),
     );
   }
+
+  buildSearchResults() {
+    return FutureBuilder(
+      future: searchResultsFuture,
+      builder: (context, dataSnapshot) {
+        if (!dataSnapshot.hasData) {
+          return circularProgress();
+        }
+        List<UserResult> searchResults = [];
+        dataSnapshot.data.documents.forEach((document) {
+          OurPlayer eachUser = OurPlayer.fromDocument(document);
+          UserResult userResult = UserResult(eachUser);
+          searchResults.add(userResult);
+        });
+        return ListView(
+          children: searchResults,
+        );
+      },
+    );
+  }
+
+
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+    backgroundColor: Colors.white,
+    appBar: buildSearchField(),
+        body: searchResultsFuture == null
+        ? buildNoContent()
+        : buildSearchResults(),
+    );
+  }
 }
 
-final databaseReference = Firestore.instance;
-
-void createRecord() async {
-  await databaseReference.collection("user").document("1").setData({
-    'title': 'Mastering Flutter',
-    'description': 'Programming Guide for Dart'
-  });
+class UserResult extends StatelessWidget {
+  final OurPlayer eachUser;
+  UserResult(this.eachUser);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          GestureDetector(
+            onTap: () => print('tapped'),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.grey,
+              ),
+              title: Text(
+                eachUser.username,
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                eachUser.sport,
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 20.0),
+            child: Divider(
+              thickness: 1.0
+              ,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -7,7 +7,7 @@ import 'package:aptus/services/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:aptus/screens/home2.dart';
+import 'package:aptus/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:aptus/services/sport_list.dart';

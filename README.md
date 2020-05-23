@@ -15,3 +15,13 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 ## we just added the uses collection, next step editing user profile.
+
+
+##User collection added into firsStore, next step about fireStore is to map the collection efficiently.
+
+
+## Now search function added, I need to debug it on work on the UI.
+
+## Next step user profile and user finder
+
+

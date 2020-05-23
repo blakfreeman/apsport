@@ -1,4 +1,4 @@
-import 'package:aptus/screens/home2.dart';
+import 'package:aptus/screens/home.dart';
 import 'package:aptus/screens/login/login.dart';
 import 'package:aptus/screens/SplashScreen.dart';
 import 'package:aptus/services/current_user_auth.dart';
@@ -44,7 +44,7 @@ class _OurRootState extends State<OurRoot> {
         retVal = LoginScreen();
         break;
       case AuthStatus.loggedIn:
-        retVal = Home2();
+        retVal = Home();
         break;
       default:
     }

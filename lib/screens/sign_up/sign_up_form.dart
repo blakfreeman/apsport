@@ -4,7 +4,7 @@ import 'package:aptus/services/current_user_auth.dart';
 import 'package:aptus/services/sport_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:aptus/screens/home2.dart';
+import 'package:aptus/screens/home.dart';
 
 class OurSignUpForm extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ void _signUpUser(String email, String password, BuildContext context,
     String _returnString = await _currentUser.signUpUser(
         email, password, username, sport, level, motivation);
     if (_returnString == "success") {
-      Navigator.pushNamed(context, Home2.id);
+      Navigator.pushNamed(context, Home.id);
 
     } else {
       Scaffold.of(context).showSnackBar(

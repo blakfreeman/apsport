@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:aptus/services/current_user_auth.dart';
 import 'package:aptus/screens/root.dart';
+import 'package:aptus/screens/home.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-enum LoginType {
-  email,
-  Registration //Must be create.
-}
+import 'package:firebase_auth/firebase_auth.dart';
+
+
+
+//Todo use the provider to log in, this way works but this is not the efficient way to do it!
 
 class OurLoginForm extends StatefulWidget {
   @override
@@ -17,113 +20,106 @@ class OurLoginForm extends StatefulWidget {
 }
 
 class _OurLoginFormState extends State<OurLoginForm> {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  void _loginUser({
-    @required LoginType type,
-    String email,
-    String password,
-    BuildContext context,
-  }) async {
-    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+  String _email;
+  String _password;
+  bool showSpinner = false;
 
+  void _login () async{
+    setState(() {
+      showSpinner = true;
+    });
     try {
-      String _returnString;
-
-      switch (type) {
-        case LoginType.email:
-          _returnString =
-              await _currentUser.loginUserWithEmail(email, password);
-          break;
-        default:
+      final user =
+          await _auth.signInWithEmailAndPassword(
+          email: _email, password: _password);
+      if (user != null) {
+        Navigator.pushNamed(context, Home.id);
       }
-
-      if (_returnString == "success") {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OurRoot(),
-          ),
-          (route) => false,
-        );
-      } else {
-        Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: Text(_returnString),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
+      setState(() {
+        showSpinner = false;
+      });
     } catch (e) {
       print(e);
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
-            child: SizedBox(
+    return ModalProgressHUD(
+      inAsyncCall:showSpinner,
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
+              child: SizedBox(
+                height: 20.0,
+              ),
+            ),
+            TextFormField(
+              style: TextStyle(color: Colors.white),
+              onChanged: (value) {
+                _email = value;
+              },
+              controller: _emailController,
+              decoration: kTextFieldDecoration.copyWith(
+                  icon: Icon(
+                    Icons.email,
+                    color: Colors.black,
+                  ),
+                  hintText: 'Email'),
+            ),
+            SizedBox(
               height: 20.0,
             ),
-          ),
-          TextFormField(
-            controller: _emailController,
-            decoration: kTextFieldDecoration.copyWith(
-                icon: Icon(
-                  Icons.email,
-                  color: Colors.black,
-                ),
-                hintText: 'Email'),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          TextFormField(
-            controller: _passwordController,
-            decoration: kTextFieldDecoration.copyWith(
-                icon: Icon(
-                  Icons.lock,
-                  color: Colors.black,
-                ),
-                hintText: 'Password'),
-            obscureText: true,
-          ),
-          SizedBox(
-            height: 40.0,
-          ),
-          Container(
-            child: OurRoundedButtonLarge(
+            TextFormField(
+              style: TextStyle(color: Colors.white),
+              onChanged: (value) {
+                _password = value;
+              },
+              controller: _passwordController,
+              decoration: kTextFieldDecoration.copyWith(
+                  icon: Icon(
+                    Icons.lock,
+                    color: Colors.black,
+                  ),
+                  hintText: 'Password'),
+              obscureText: true,
+            ),
+            SizedBox(
+              height: 40.0,
+            ),
+            Container(
+              child: OurRoundedButtonLarge(
 
-    title: 'Login',
-    colour: Color(0xFF542581),
+      title: 'Login',
+      colour: Color(0xFF542581),
 
 
+                onPressed:_login,
+              ),
+            ),
+            FlatButton(
+              //this need to be bold or bigger
+              child: Text("Don't have an account? Sign up here",style:
+                TextStyle(fontFamily: 'DM Sans',
+                fontWeight: FontWeight.bold),),
+              textColor: Colors.white,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               onPressed: () {
-                _loginUser(
-                    type: LoginType.email,
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    context: context);
+                Navigator.pushNamed(context, SignUpScreen.id);
               },
             ),
-          ),
-          FlatButton(
-            //this need to be bold or bigger
-            child: Text("Don't have an account? Sign up here",style:
-              TextStyle(fontFamily: 'DM Sans',
-              fontWeight: FontWeight.bold),),
-            textColor: Colors.white,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            onPressed: () {
-              Navigator.pushNamed(context, SignUpScreen.id);
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

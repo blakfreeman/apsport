@@ -3,13 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 
 class OurDatabase {
-  final Firestore _fireStore = Firestore.instance;
+
+
+  final usersRef = Firestore.instance.collection;
+
 //Todo create the same for the coaches
   Future<String> createPlayer(OurPlayer user) async {
     String retVal = "error";
 
     try {
-      await _fireStore.collection("users").document(user.uid).setData({
+      await usersRef('users').document(user.uid).setData({
         'username': user.username,
         'email': user.email,
         'sport': user.sport,
@@ -30,7 +33,7 @@ class OurDatabase {
 
     try {
       DocumentSnapshot _docSnapshot =
-          await _fireStore.collection("users").document(uid).get();
+          await usersRef("users").document(uid).get();
       retVal.uid = uid;
       retVal.username = _docSnapshot.data["username"];
       retVal.email = _docSnapshot.data["email"];

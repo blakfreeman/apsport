@@ -20,4 +20,19 @@ class OurPlayer {
     this.accountCreated,
 
   });
+
+  factory OurPlayer.fromDocument(DocumentSnapshot doc) {
+    return OurPlayer(
+      uid: doc['uid'],
+      email: doc['email'],
+      username: doc['username'],
+      sport: doc['sport'],
+      level: doc['level'],
+      motivation: doc['motivation'],
+    );
+  }
 }
+
+
+
+
