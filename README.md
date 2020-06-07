@@ -22,6 +22,10 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Now search function added, I need to debug it on work on the UI.
 
-## Next step user profile and user finder
+## Next step user profile.
+
+## I found a way to show the user info, this push is not a clean version but his use is for Marie be able to work with the app.
+
+
 
 

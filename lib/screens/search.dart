@@ -38,7 +38,8 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin<Sear
 
 //Due to a bug or maybe I don't understand it well enough, It seams that I can't align the on the top left and top right my icons, so I remove them for now (temporally)
   AppBar buildSearchField() {
-    return AppBar(backgroundColor: Colors.blueAccent,title:
+    return AppBar(automaticallyImplyLeading: false,backgroundColor: Colors.blueAccent,title:
+
      TextFormField(
         controller: searchController,
         style: TextStyle(color: Colors.white),
@@ -51,6 +52,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin<Sear
           hintText: "Search for a sport...",
           hintStyle: TextStyle(color: Colors.white),
           filled: true,
+          prefixIcon: Icon(Icons.search,color: Colors.white,),
           suffixIcon: IconButton(
             icon: Icon(Icons.clear,
             color: Colors.white,),

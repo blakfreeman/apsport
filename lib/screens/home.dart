@@ -3,8 +3,13 @@ import 'package:aptus/screens/event.dart';
 import 'package:aptus/screens/near_me.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/search.dart';
-import 'package:aptus/screens/edit_profile.dart';
+import 'package:aptus/screens/profile.dart';
 import 'package:aptus/screens/chat.dart';
+import 'package:aptus/model/users.dart';
+
+
+OurPlayer currentUser;
+
 
 class Home extends StatefulWidget {
   static const String id = 'home';
@@ -15,6 +20,8 @@ class Home extends StatefulWidget {
 class _Home2State extends State<Home> {
   PageController _pageController;
   int _page = 0;
+
+OurPlayer currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,7 @@ class _Home2State extends State<Home> {
           Search(),
           Event(),
           Chat(),
-          EditProfile(),
+          Profile(),
         ],
       ),
       bottomNavigationBar: CupertinoTabBar(

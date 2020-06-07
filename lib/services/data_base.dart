@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 
 class OurDatabase {
-
-
   final usersRef = Firestore.instance.collection;
 
 //Todo create the same for the coaches
@@ -12,7 +10,10 @@ class OurDatabase {
     String retVal = "error";
 
     try {
-      await usersRef('users').document(user.uid).setData({
+      await usersRef('users')
+          .document(user.uid)
+          .setData({
+        'uid': user.uid,
         'username': user.username,
         'email': user.email,
         'sport': user.sport,
@@ -41,7 +42,6 @@ class OurDatabase {
       retVal.level = _docSnapshot.data["level"];
       retVal.motivation = _docSnapshot.data["motivation"];
       retVal.accountCreated = _docSnapshot.data["accountCreated"];
-
     } catch (e) {
       print(e);
     }

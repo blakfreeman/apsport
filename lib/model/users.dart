@@ -9,7 +9,7 @@ class OurPlayer {
   String motivation;
   Timestamp accountCreated;
 
-
+//take care of the carlibraces
   OurPlayer({
     this.uid,
     this.email,
@@ -20,6 +20,15 @@ class OurPlayer {
     this.accountCreated,
 
   });
+
+  Map<String, dynamic> toJson() => {
+    'uid': uid,
+    'email': email,
+    'username': username,
+    'sport': sport,
+    'level': level,
+    'motivation': motivation,
+  };
 
   factory OurPlayer.fromDocument(DocumentSnapshot doc) {
     return OurPlayer(

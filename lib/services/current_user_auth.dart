@@ -1,6 +1,7 @@
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/sign_up/sign_up_form.dart';
 import 'package:aptus/services/data_base.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -9,8 +10,9 @@ class CurrentUser extends ChangeNotifier {
   OurPlayer _currentUser = OurPlayer();
 
   OurPlayer get getCurrentUser => _currentUser;
-
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+final usersRef = Firestore.instance.collection('users');
 
   Future<String> onStartUp() async {
     String retVal = "error";
@@ -29,6 +31,13 @@ class CurrentUser extends ChangeNotifier {
     return retVal;
   }
 
+  Future<String> getCurrentUID() async {
+    return (await _auth.currentUser()).uid;
+  }
+
+  Future getUser() async {
+    return await _auth.currentUser();
+  }
 
 
   Future<String> signOut() async {

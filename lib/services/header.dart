@@ -13,6 +13,6 @@ AppBar header(context, {bool isAppTitle = false, String titleText}) {
       ),
     ),
     centerTitle: true,
-    backgroundColor: Theme.of(context).primaryColor,
+    backgroundColor: Colors.blueAccent,
   );
 }

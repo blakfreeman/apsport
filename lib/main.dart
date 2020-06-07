@@ -1,7 +1,4 @@
 import 'package:aptus/screens/SplashScreen.dart';
-import 'package:aptus/screens/chat.dart';
-import 'package:aptus/screens/edit_profile.dart';
-import 'package:aptus/screens/event.dart';
 import 'package:aptus/screens/home.dart';
 import 'package:aptus/screens/login/login.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
@@ -37,7 +34,7 @@ class MyApp extends StatelessWidget {
           SignUpScreen.id: (context) => SignUpScreen(),
           NearMe.id: (context) => NearMe(),
           Search.id: (context) => Search(),
-
+          ProfileScreen.id: (context) => ProfileScreen(),
         },
       ),
     );
