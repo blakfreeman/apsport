@@ -4,13 +4,13 @@ class User {
   final String id;
   final String username;
   final String email;
-  final String bio;
+
 
   User({
     this.id,
     this.username,
     this.email,
-    this.bio,
+
   });
 
   factory User.fromDocument(DocumentSnapshot doc) {
@@ -18,7 +18,7 @@ class User {
       id: doc['id'],
       email: doc['email'],
       username: doc['username'],
-      bio: doc['bio'],
+
     );
   }
 }

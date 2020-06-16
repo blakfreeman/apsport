@@ -1,11 +1,10 @@
 import 'package:aptus/screens/SplashScreen.dart';
-import 'package:aptus/screens/home.dart';
+import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
 import 'package:aptus/screens/login/login.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
-import 'package:aptus/screens/near_me.dart';
-import 'package:aptus/screens/profiles.dart';
+import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/near_me.dart';
 import 'package:aptus/screens/root.dart';
-import 'package:aptus/screens/search.dart';
+import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/search.dart';
 import 'package:aptus/services/current_user_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
           SignUpScreen.id: (context) => SignUpScreen(),
           NearMe.id: (context) => NearMe(),
           Search.id: (context) => Search(),
-          ProfileScreen.id: (context) => ProfileScreen(),
         },
       ),
     );

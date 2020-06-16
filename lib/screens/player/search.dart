@@ -1,13 +1,8 @@
 import 'package:aptus/model/users.dart';
-import 'package:aptus/services/data_base.dart';
-import 'package:aptus/services/header.dart';
 import 'package:aptus/services/progress.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:aptus/services/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:aptus/users/users.dart';
 
 class Search extends StatefulWidget {
   static const String id = 'search';

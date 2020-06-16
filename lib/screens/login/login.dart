@@ -1,8 +1,6 @@
-import 'package:aptus/screens/login/login_form.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:aptus/screens/home.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,7 +23,6 @@ String _email;
 String _password;
 bool showSpinner = false;
 
-void _login () {}
 
 class _LoginScreenState extends State<LoginScreen> {
   @override

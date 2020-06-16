@@ -1,36 +1,19 @@
-import 'dart:ui';
-
 import 'package:aptus/screens/sign_up/sign_up_form.dart';
 import 'package:flutter/material.dart';
-import 'package:aptus/services/components.dart';
-import 'package:aptus/services/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:aptus/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:aptus/services/sport_list.dart';
 import 'package:aptus/users/users.dart';
-import 'dart:async';
 
 class SignUpScreen extends StatefulWidget {
-  static const String id = 'signup';
+  static const String id = 'sign up';
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController _controller = TextEditingController();
-  final TextEditingController _controllerLevel = TextEditingController();
-  final TextEditingController _controllerMyReason = TextEditingController();
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _username = TextEditingController();
-  final TextEditingController _pass = TextEditingController();
-  final _auth = FirebaseAuth.instance;
-  final _formKey = GlobalKey<FormState>();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final databaseReference = Firestore.instance;
   final DateTime timestamp = DateTime.now();
   final usersRef = Firestore.instance.collection('users');
@@ -106,9 +89,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: Colors.white),
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 10.0,
                         ),
                         OurSignUpForm(),
+
                       ],
                     ),
                   ],

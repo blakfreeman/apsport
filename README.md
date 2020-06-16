@@ -16,16 +16,15 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 ## we just added the uses collection, next step editing user profile.
 
-
 ##User collection added into firsStore, next step about fireStore is to map the collection efficiently.
 
-
-## Now search function added, I need to debug it on work on the UI.
+## Now search function added, I need to debug it and work on the UI,we really need to talk about the optimal database mapping.
 
 ## Next step user profile.
 
-## I found a way to show the user info, this push is not a clean version but his use is for Marie be able to work with the app.
+## user Profile done, Marie will help to customise the profile, based on the wireframe.
 
+## next step, find user nearBy, in correlation with my maine sport.
 
 
 

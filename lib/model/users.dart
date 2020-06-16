@@ -2,46 +2,62 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OurPlayer {
   String uid;
-  String email;
   String username;
+  String email;
+  String gender;
+  String age;
+  String city;
   String sport;
   String level;
+  String moment;
+  String weekly;
   String motivation;
   Timestamp accountCreated;
 
 //take care of the carlibraces
   OurPlayer({
     this.uid,
-    this.email,
     this.username,
+    this.email,
+    this.gender,
+    this.age,
+    this.city,
     this.sport,
     this.level,
+    this.moment,
+    this.weekly,
     this.motivation,
     this.accountCreated,
-
   });
 
   Map<String, dynamic> toJson() => {
     'uid': uid,
-    'email': email,
     'username': username,
+    'email': email,
+    'gender': gender,
+    'age': age,
+    'city': city,
     'sport': sport,
     'level': level,
+    'moment': moment,
+    'weekly': weekly,
     'motivation': motivation,
-  };
+
+      };
 
   factory OurPlayer.fromDocument(DocumentSnapshot doc) {
     return OurPlayer(
       uid: doc['uid'],
-      email: doc['email'],
       username: doc['username'],
+      email: doc['email'],
+      age: doc['age'],
+      gender: doc['gender'],
+      city:doc['city'],
       sport: doc['sport'],
       level: doc['level'],
+      moment: doc['moment'],
+      weekly: doc['weekly'],
       motivation: doc['motivation'],
     );
   }
 }
-
-
-
-

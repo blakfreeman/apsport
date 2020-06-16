@@ -2,12 +2,8 @@ import 'package:aptus/screens/sign_up/Sign_up.dart';
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:aptus/services/current_user_auth.dart';
-import 'package:aptus/screens/root.dart';
-import 'package:aptus/screens/home.dart';
+import 'package:aptus/screens/player/home.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 
 

@@ -5,6 +5,11 @@ class Sport {
     'Judo ',
     'Fitness',
     'BJJ',
+    'BasketBall',
+    'Yoga',
+    'Dance',
+    'Pole Dance',
+    'Gym',
   ];
 }
 
@@ -20,20 +25,20 @@ class SportLevel {
 // I know it's quite some work and their other way to do it but for the MVP It 's easier for me to go faster, and the advantage here is we can control the city we need be present for the next 3 month at least
 class City {
   List<String> city = [
-    'Bruxells',
+    'Bruxelles',
     'Liege',
     'Antwerp',
     'Paris',
-    'Mareille',
+    'Marsseille',
     'autre',
   ];
 }
 
-class Genre {
+class Gender {
   List<String> sex = [
-    'Home',
-    'Femme',
-    'Autre',
+    'Men',
+    'Women',
+    'other',
   ];
 }
 
@@ -53,10 +58,11 @@ class Ages {
 class Moment {
   List<String> best = [
     'Morning',
-    'Afternon',
+    'Afternoon',
     'Evening',
     'Night',
     'Anytime',
+    "I don't know",
   ];
 }
 
@@ -64,16 +70,19 @@ class WeekOrWeekEnd {
   List<String> best = [
     'Week',
     'Weekend',
+    "both",
+    "I don' know",
   ];
 }
 
 class MyReason {
   List<String> reason = [
-    'To chalenge me',
+    'To challenge me',
     'lose weight',
-    'having more enrgy',
-    'meet someone',
+    'having more energy',
+    'meet someone and have fun',
     'having fun',
-    'competion',
+    'I want to compete with others',
+    "I don't have a special reason",
   ];
 }

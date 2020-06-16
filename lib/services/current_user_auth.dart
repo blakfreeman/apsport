@@ -53,8 +53,8 @@ final usersRef = Firestore.instance.collection('users');
     return retVal;
   }
 
-  Future<String> signUpUser(
-      String email, String password, String username, String sport, String level, String motivation) async {
+  Future<String> signUpUser(String username,
+      String email, String password,String age, String gender,String city, String sport, String level,String moment,String weekly, String motivation) async {
     String retVal = "error";
     OurPlayer _user = OurPlayer();
     try {
@@ -63,8 +63,13 @@ final usersRef = Firestore.instance.collection('users');
       _user.uid = _authResult.user.uid;
       _user.email = _authResult.user.email;
       _user.username = username;
+      _user.gender = gender;
+      _user.age = age;
+      _user.city = city;
       _user.sport = sport;
       _user.level = level;
+      _user.moment = moment;
+      _user.weekly = weekly;
       _user.motivation = motivation;
 
       String _returnString = await OurDatabase().createPlayer(_user);
