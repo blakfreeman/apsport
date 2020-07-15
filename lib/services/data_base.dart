@@ -1,13 +1,12 @@
 import 'package:aptus/model/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-
-class OurDatabase {
+import 'package:flutter/cupertino.dart';
+class OurDatabase extends ChangeNotifier {
 
   final String uid;
   OurDatabase({ this.uid });
 
-  final usersRef = Firestore.instance.collection('users');
+  final  usersRef = Firestore.instance.collection('users');
 
 //Todo create the same for the coaches
   Future<String> createPlayer(OurPlayer user) async {
@@ -64,4 +63,32 @@ class OurDatabase {
 
     return retVal;
   }
+
+
+  // users list from snapshot
+  List<OurPlayer> _ourPlayerListFormSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc){
+      //print(doc.data);
+      return OurPlayer(
+          username: doc.data['username'],
+          email: doc.data['email'],
+          age: doc.data['age'],
+          gender: doc.data['gender'],
+          city: doc.data['city'],
+          sport: doc.data['sport'],
+          level: doc.data['level'] ,
+          moment: doc.data['moment'],
+          weekly: doc.data['weekly'] ,
+          motivation: doc.data['motivation'],
+      );
+    }).toList();
+  }
+
+  // get Our player stream
+  Stream <List<OurPlayer>> get player {
+    return usersRef.snapshots()
+        .map(_ourPlayerListFormSnapshot);
+  }
+
 }
+

@@ -1,11 +1,12 @@
+import 'package:aptus/screens/player/maine_page/dummy.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/profile/user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aptus/screens/player/event.dart';
-import 'package:aptus/screens/player/near_me.dart';
 import 'package:aptus/screens/player/search.dart';
 import 'package:aptus/screens/player/chat.dart';
 import 'package:aptus/model/users.dart';
+
 
 
 OurPlayer currentUser;
@@ -31,7 +32,7 @@ OurPlayer currentUser;
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: <Widget>[
-          NearMe(),
+          MainePage(),
           Search(),
           Event(),
           Chat(),

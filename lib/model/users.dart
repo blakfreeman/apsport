@@ -45,6 +45,22 @@ class OurPlayer {
 
       };
 
+
+
+  //creating a Trip object from a firebase snapshot
+  OurPlayer.fromSnapshot(DocumentSnapshot snapshot) :
+        uid = snapshot['uid'],
+        username= snapshot['username'],
+        email= snapshot['email'],
+        age= snapshot['age'],
+        gender= snapshot['gender'],
+        city= snapshot['city'],
+        sport= snapshot['sport'],
+        level= snapshot['level'],
+        moment= snapshot['moment'],
+        weekly= snapshot['weekly'],
+        motivation= snapshot['motivation'];
+
   factory OurPlayer.fromDocument(DocumentSnapshot doc) {
     return OurPlayer(
       uid: doc['uid'],
@@ -60,4 +76,6 @@ class OurPlayer {
       motivation: doc['motivation'],
     );
   }
+
+
 }

@@ -1,13 +1,15 @@
+import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/SplashScreen.dart';
 import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
 import 'package:aptus/screens/login/login.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
-import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/near_me.dart';
+import 'screens/player/maine_page/maine_page.dart';
 import 'package:aptus/screens/root.dart';
 import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/search.dart';
 import 'package:aptus/services/current_user_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:aptus/services/data_base.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,8 +18,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CurrentUser(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CurrentUser(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => OurDatabase(),
+        ),
+      ],
       child: MaterialApp(
         title: 'APTUS',
         debugShowCheckedModeBanner: false,
@@ -31,7 +40,7 @@ class MyApp extends StatelessWidget {
           OurSplashScreen.id: (context) => OurSplashScreen(),
           Home.id: (context) => Home(),
           SignUpScreen.id: (context) => SignUpScreen(),
-          NearMe.id: (context) => NearMe(),
+          MainePage.id: (context) => MainePage(),
           Search.id: (context) => Search(),
         },
       ),
