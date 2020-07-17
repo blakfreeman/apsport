@@ -3,7 +3,7 @@ import 'package:aptus/screens/SplashScreen.dart';
 import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
 import 'package:aptus/screens/login/login.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
-import 'screens/player/maine_page/maine_page.dart';
+import 'screens/player/maine_page.dart';
 import 'package:aptus/screens/root.dart';
 import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/search.dart';
 import 'package:aptus/services/current_user_auth.dart';

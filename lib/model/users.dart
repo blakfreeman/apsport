@@ -47,7 +47,7 @@ class OurPlayer {
 
 
 
-  //creating a Trip object from a firebase snapshot
+  //creating a Player object from a firebase snapshot
   OurPlayer.fromSnapshot(DocumentSnapshot snapshot) :
         uid = snapshot['uid'],
         username= snapshot['username'],

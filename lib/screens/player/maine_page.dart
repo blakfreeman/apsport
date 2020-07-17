@@ -1,7 +1,7 @@
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
 import 'package:aptus/services/current_user_auth.dart';
-import 'package:aptus/screens/player/maine_page/our_player_card.dart';
+
 import 'package:aptus/services/data_base.dart';
 import 'package:aptus/services/progress.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,11 +36,11 @@ class _MainePageState extends State<MainePage> {
     _addCurrentUserPosition();
 
   }
-  // Set GeoLocation Data for the current user
-   _addCurrentUserPosition() async {
+  // Set GeoLocation Data for the current user we are going to use it later. it will help also to sort the list view
+  _addCurrentUserPosition() async {
     Location location = Location();
     final uid = await Provider.of<CurrentUser>(context,listen: false).getCurrentUID();
-     await location.getCurrentLocation();
+    await location.getCurrentLocation();
     GeoFirePoint point = geo.point(latitude: location.latitude, longitude: location.longitude);
     return _positionInFireStore.collection('users').document(uid).collection(
         'UserPosition').document().setData({
@@ -63,16 +63,16 @@ class _MainePageState extends State<MainePage> {
     return Scaffold(
       appBar: header(context, isAppTitle: true),
       body: Container(
-      child:   FutureBuilder(
-        future: Provider.of<CurrentUser>(context).getUser(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return showHomePageWithUsers(snapshot.data);
-          } else {
-            return circularProgress();
-          }
-        },
-      )
+          child:   FutureBuilder(
+            future: Provider.of<CurrentUser>(context).getUser(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return showHomePageWithUsers(snapshot.data);
+              } else {
+                return circularProgress();
+              }
+            },
+          )
       ),
     );
 
@@ -92,9 +92,9 @@ class _MainePageState extends State<MainePage> {
                   child: Row(children: <Widget>[
                     Text(
                       eachUsers.username,
-                    style:
-                    TextStyle(fontFamily: 'DM Sans',
-                        fontWeight: FontWeight.bold),
+                      style:
+                      TextStyle(fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.bold),
                     ),
                     Spacer(),
                   ]),

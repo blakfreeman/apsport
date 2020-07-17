@@ -14,17 +14,20 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-## we just added the uses collection, next step editing user profile.
+## we just added the uses collection, next step editing user profile.done
 
-##User collection added into firsStore, next step about fireStore is to map the collection efficiently.
+##User collection added into firsStore, next step about fireStore is to map the collection efficiently.done
 
-## Now search function added, I need to debug it and work on the UI,we really need to talk about the optimal database mapping.
+## Now search function added, I need to debug it and work on the UI,we really need to talk about the optimal database mapping. done
 
-## Next step user profile.
+## Next step user profile.done 
 
-## user Profile done, Marie will help to customise the profile, based on the wireframe.
+## user Profile done, Marie will help to customise the profile, based on the wireframe. done 
 
-## next step, find user nearBy, in correlation with my maine sport.
+## next step, find user nearBy, in correlation with my maine sport. done
+
+## next step,chat between users and adding group chat.
+
 
 
 
