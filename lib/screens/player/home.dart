@@ -1,6 +1,6 @@
 import 'package:aptus/screens/player/maine_page.dart';
+import 'package:aptus/screens/player/user_profile.dart';
 import 'package:flutter/material.dart';
-import 'package:aptus/screens/profile/user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aptus/screens/player/event.dart';
 import 'package:aptus/screens/player/search.dart';
