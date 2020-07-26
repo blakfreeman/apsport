@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+class Constants{
+
+  static String myName = "";
+}
+
 const kTextFieldDecoration = InputDecoration(
   focusedBorder: UnderlineInputBorder(
     borderSide: BorderSide(color: Colors.white),

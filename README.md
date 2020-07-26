@@ -26,7 +26,10 @@ samples, guidance on mobile development, and a full API reference.
 
 ## next step, find user nearBy, in correlation with my maine sport. done
 
-## next step,chat between users and adding group chat.
+## next step,screens.player.chat between users and adding group screens.player.chat.
+
+## lAST PUSH 26-07, chat still in construction 
+
 
 
 

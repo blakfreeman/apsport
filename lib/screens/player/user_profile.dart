@@ -1,4 +1,5 @@
 import 'package:aptus/model/users.dart';
+import 'package:aptus/screens/login/login.dart';
 import 'package:aptus/services/current_user_auth.dart';
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/header.dart';
@@ -17,6 +18,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final CurrentUser _auth = CurrentUser();
   final firestoreInstance = Firestore.instance;
   TextEditingController _userUsernameController = TextEditingController();
   TextEditingController _userAgeController = TextEditingController();
@@ -62,6 +64,7 @@ class _ProfileState extends State<Profile> {
         Container(
           child: Column(
             children: <Widget>[
+              showSignOut(context),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: CircleAvatar(
@@ -293,6 +296,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
+        showSignOut(context),
       ],
     );
   }
@@ -641,12 +645,10 @@ class _ProfileState extends State<Profile> {
   Widget showSignOut(context) {
     return RaisedButton(
       child: Text("Sign Out"),
-      onPressed: () async {
-        try {
-          await Provider.of<CurrentUser>(context).signOut();
-        } catch (e) {
-          print(e);
-        }
+      onPressed:  () async {
+        await _auth.signOut();
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => LoginScreen()));
       },
     );
   }

@@ -3,10 +3,12 @@ import 'package:aptus/services/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'chat/chat_screen.dart';
+
 class UserDetails extends StatelessWidget {
   final OurPlayer ourPlayer;
-
-  UserDetails({Key key, @required this.ourPlayer}) : super(key: key);
+  final String chatRoomId;
+  UserDetails({Key key, @required this.ourPlayer,this.chatRoomId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +103,13 @@ class UserDetails extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: null,child: Icon(Icons.textsms), ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => Chat(
+              chatRoomId: chatRoomId,
+            )
+        ));
+      },child: Icon(Icons.textsms), ),
     );
   }
 }

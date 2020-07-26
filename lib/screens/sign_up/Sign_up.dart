@@ -14,6 +14,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
 
+
   final databaseReference = Firestore.instance;
   final DateTime timestamp = DateTime.now();
   final usersRef = Firestore.instance.collection('users');

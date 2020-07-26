@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
 
 class OurSignUpForm extends StatefulWidget {
+
+
   @override
   _OurSignUpFormState createState() => _OurSignUpFormState();
 }
@@ -36,7 +38,7 @@ void _signUpUser(String email, String password, BuildContext context,
     String _returnString = await _currentUser.signUpUser(username,
         email,password,age,gender,city,sport,level,moment,weekly,motivation);
     if (_returnString == "success") {
-      Navigator.pushNamed(context, Home.id);
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Home()));
 
     } else {
       Scaffold.of(context).showSnackBar(
@@ -426,7 +428,23 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                 color: Colors.white),
           ),
           SizedBox(
-            height: 20.0,
+            height: 8.0,
+          ),
+          GestureDetector(
+            onTap: () {
+
+    },
+            child: Text(
+              'Already have an account? ',
+              style: TextStyle(
+                  fontFamily: 'DM Sans',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15.0,
+                  color: Colors.white),
+            ),
+          ),
+          SizedBox(
+            height: 15.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

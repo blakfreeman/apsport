@@ -1,14 +1,14 @@
 import 'package:aptus/screens/sign_up/Sign_up.dart';
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
+import 'package:aptus/services/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/player/home.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
-
-//Todo use the provider to log in, this way works but this is not the efficient way to do it!
+//Todo remove it it's useless
 
 class OurLoginForm extends StatefulWidget {
   @override
@@ -32,10 +32,12 @@ class _OurLoginFormState extends State<OurLoginForm> {
     });
     try {
       final user =
-          await _auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
           email: _email, password: _password);
+      HelperFunctions.saveUserLoggedInSharedPreference(true);
+
       if (user != null) {
-        Navigator.pushNamed(context, Home.id);
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Home()));
       }
       setState(() {
         showSpinner = false;
@@ -96,8 +98,8 @@ class _OurLoginFormState extends State<OurLoginForm> {
             Container(
               child: OurRoundedButtonLarge(
 
-      title: 'Login',
-      colour: Color(0xFF542581),
+                title: 'Login',
+                colour: Color(0xFF542581),
 
 
                 onPressed:_login,
@@ -106,8 +108,8 @@ class _OurLoginFormState extends State<OurLoginForm> {
             FlatButton(
               //this need to be bold or bigger
               child: Text("Don't have an account? Sign up here",style:
-                TextStyle(fontFamily: 'DM Sans',
-                fontWeight: FontWeight.bold),),
+              TextStyle(fontFamily: 'DM Sans',
+                  fontWeight: FontWeight.bold),),
               textColor: Colors.white,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               onPressed: () {

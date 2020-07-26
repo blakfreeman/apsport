@@ -1,6 +1,7 @@
 import 'package:aptus/screens/sign_up/Sign_up.dart';
+import 'package:aptus/services/helper.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
+import 'package:aptus/screens/player/home.dart';
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,7 +25,19 @@ String _password;
 bool showSpinner = false;
 
 
+
+
 class _LoginScreenState extends State<LoginScreen> {
+
+  bool userIsLoggedIn;
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,6 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               final user =
                               await _auth.signInWithEmailAndPassword(
                                   email: _email, password: _password);
+                              HelperFunctions.saveUserLoggedInSharedPreference(true);
                               if (user != null) {
                                 Navigator.pushNamed(context, Home.id);
                               }

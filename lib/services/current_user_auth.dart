@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:aptus/services/helper.dart';
+
 
 
 class CurrentUser extends ChangeNotifier {
@@ -40,6 +42,15 @@ final usersRef = Firestore.instance.collection('users');
     return await _auth.currentUser();
   }
 
+  Future bye() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
 
   Future<String> signOut() async {
     String retVal = "error";
@@ -72,6 +83,7 @@ final usersRef = Firestore.instance.collection('users');
       _user.moment = moment;
       _user.weekly = weekly;
       _user.motivation = motivation;
+      HelperFunctions.saveUserLoggedInSharedPreference(true);
 
       String _returnString = await OurDatabase().createPlayer(_user);
       if (_returnString == "success") {
