@@ -19,6 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   animator: 0.1.4
   cupertino_icons: ^0.1.2
   provider: ^4.0.5
@@ -35,6 +37,8 @@ dependencies:
   flutter_datetime_picker:
   geoflutterfire: ^2.1.0
   geolocator: ^5.3.2+2
+  i18n_extension:
+  email_validator: ^1.0.0
 
 
 dev_dependencies:
@@ -51,14 +55,11 @@ flutter:
     - family: DM Sans
       fonts:
         - asset: assets/fonts/DMSans-Regular.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
   assets:
-    - assets/images/AptusP_G.png
-    - assets/images/bleu_image.png
-    - assets/images/sign_up.jpg
-    - assets/images/Aptus_white.png
-    - assets/images/icons8-google-48.png
-    - assets/images/icons8-facebook-circled-48.png
-    - assets/images/anthony.jpg
+    - assets/images/
 
 
 

@@ -1,21 +1,19 @@
 import 'package:aptus/model/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+
 class OurDatabase extends ChangeNotifier {
-
   final String uid;
-  OurDatabase({ this.uid });
+  OurDatabase({this.uid});
 
-  final  usersRef = Firestore.instance.collection('users');
+  final usersRef = Firestore.instance.collection('users');
 
 //Todo create the same for the coaches
   Future<String> createPlayer(OurPlayer user) async {
     String retVal = "error";
 
     try {
-      await usersRef
-          .document(user.uid)
-          .setData({
+      await usersRef.document(user.uid).setData({
         'uid': user.uid,
         'username': user.username,
         'email': user.email,
@@ -37,14 +35,11 @@ class OurDatabase extends ChangeNotifier {
     return retVal;
   }
 
-
-
   Future<OurPlayer> getUserInfo(String uid) async {
     OurPlayer retVal = OurPlayer();
 
     try {
-      DocumentSnapshot _docSnapshot =
-          await usersRef.document(uid).get();
+      DocumentSnapshot _docSnapshot = await usersRef.document(uid).get();
       retVal.uid = uid;
       retVal.username = _docSnapshot.data["username"];
       retVal.email = _docSnapshot.data["email"];
@@ -64,31 +59,47 @@ class OurDatabase extends ChangeNotifier {
     return retVal;
   }
 
-
   // users list from snapshot
   List<OurPlayer> _ourPlayerListFormSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc){
+    return snapshot.documents.map((doc) {
       //print(doc.data);
       return OurPlayer(
-          username: doc.data['username'],
-          email: doc.data['email'],
-          age: doc.data['age'],
-          gender: doc.data['gender'],
-          city: doc.data['city'],
-          sport: doc.data['sport'],
-          level: doc.data['level'] ,
-          moment: doc.data['moment'],
-          weekly: doc.data['weekly'] ,
-          motivation: doc.data['motivation'],
+        username: doc.data['username'],
+        email: doc.data['email'],
+        age: doc.data['age'],
+        gender: doc.data['gender'],
+        city: doc.data['city'],
+        sport: doc.data['sport'],
+        level: doc.data['level'],
+        moment: doc.data['moment'],
+        weekly: doc.data['weekly'],
+        motivation: doc.data['motivation'],
       );
     }).toList();
   }
 
   // get Our player stream
-  Stream <List<OurPlayer>> get player {
-    return usersRef.snapshots()
-        .map(_ourPlayerListFormSnapshot);
+  Stream<List<OurPlayer>> get player {
+    return usersRef.snapshots().map(_ourPlayerListFormSnapshot);
   }
-
 }
 
+Future<bool> doesNameAlreadyExist(String name) async {
+  final QuerySnapshot result = await Firestore.instance
+      .collection('users')
+      .where('username', isEqualTo: name)
+      .limit(1)
+      .getDocuments();
+  final List<DocumentSnapshot> documents = result.documents;
+  return documents.length == 1;
+}
+
+Future<bool> doesMailAlreadyExist(String name) async {
+  final QuerySnapshot result = await Firestore.instance
+      .collection('users')
+      .where('email', isEqualTo: name)
+      .limit(1)
+      .getDocuments();
+  final List<DocumentSnapshot> documents = result.documents;
+  return documents.length == 1;
+}

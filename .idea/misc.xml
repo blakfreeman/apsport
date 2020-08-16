@@ -3,6 +3,7 @@
   <component name="ProjectPlainTextFileTypeManager">
     <file url="file://$PROJECT_DIR$/lib/services/current_user_auth.dart" />
   </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" default="false" />
   <component name="ProjectType">
     <option name="id" value="io.flutter" />
   </component>

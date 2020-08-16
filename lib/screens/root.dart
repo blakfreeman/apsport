@@ -1,4 +1,5 @@
-import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
+//import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
+import 'package:aptus/screens/player/home.dart';
 import 'package:aptus/screens/login/login.dart';
 import 'package:aptus/services/current_user_auth.dart';
 import 'package:flutter/material.dart';

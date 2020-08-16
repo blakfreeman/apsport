@@ -33,3 +33,11 @@ const kLargeButtonTextStyle = TextStyle(
   fontSize: 25.0,
   fontWeight: FontWeight.bold,
 );
+
+const Color kBackgroundColor = Color(0xFF000841);
+const Color kForegroundColor = Color(0xFFE0E4FF);
+const Color kHighlightColor = Color(0xFF8A95FF);
+const Color kDisabledColor = Color(0xFFAF9CD3);
+const Color kDarkestColor = Color(0xFF081040);
+const Color kValidateColor = Color(0xFF29BF12);
+const Color kErrorColor = Color(0xFFFF220C);

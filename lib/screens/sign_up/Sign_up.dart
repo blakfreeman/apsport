@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:aptus/users/users.dart';
+import 'package:aptus/screens/sign_up/sign_up.i18n.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'sign up';
@@ -13,7 +14,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   final databaseReference = Firestore.instance;
   final DateTime timestamp = DateTime.now();
   final usersRef = Firestore.instance.collection('users');
@@ -36,9 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         decoration: BoxDecoration(
           color: Colors.black,
           image: DecorationImage(
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.35), BlendMode.dstATop),
-              image: AssetImage('assets/images/sign_up.jpg'),
+              image: AssetImage('assets/images/background_2.jpg'),
               fit: BoxFit.cover),
         ),
         constraints: BoxConstraints(),
@@ -55,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 130.0),
                     child: Text(
-                      'Profile',
+                      'Sign up'.i18n.toUpperCase(),
                       style: TextStyle(
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.bold,
@@ -80,19 +78,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          'Add your details ',
-                          style: TextStyle(
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.0,
-                              color: Colors.white),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
+//                        SizedBox(
+//                          height: 10.0,
+//                        ),
                         OurSignUpForm(),
-
                       ],
                     ),
                   ],
