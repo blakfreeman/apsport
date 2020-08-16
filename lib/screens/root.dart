@@ -1,53 +1,43 @@
-//import 'file:///C:/Users/blakf/Desktop/Proto/aptus/lib/screens/player/home.dart';
 import 'package:aptus/screens/player/home.dart';
 import 'package:aptus/screens/login/login.dart';
-import 'package:aptus/services/current_user_auth.dart';
+import 'package:aptus/screens/player/home.dart';
+import 'package:aptus/services/helper.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-enum AuthStatus {
-  notLoggedIn,
-  loggedIn,
-}
 
 class OurRoot extends StatefulWidget {
-  static const String id = 'OurRoot';
+  static const String id = 'ourRoot';
 
   @override
   _OurRootState createState() => _OurRootState();
 }
 
+//
 class _OurRootState extends State<OurRoot> {
-  AuthStatus _authStatus = AuthStatus.notLoggedIn;
+  bool userIsLoggedIn;
 
   @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
+  void initState() {
+    getLoggedInState();
+    super.initState();
+  }
 
-    //get the state, check current User, set AuthStatus based on state
-    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
-    String _returnString = await _currentUser.onStartUp();
-    if (_returnString == "success") {
-    } else {
+//chech doc helper function
+  getLoggedInState() async {
+    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
       setState(() {
-        _authStatus = AuthStatus.notLoggedIn;
+        userIsLoggedIn = true; //this must be wrong
       });
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget retVal;
-
-    switch (_authStatus) {
-      case AuthStatus.notLoggedIn:
-        retVal = LoginScreen();
-        break;
-      case AuthStatus.loggedIn:
-        retVal = Home();
-        break;
-      default:
-    }
-    return retVal;
+    return userIsLoggedIn != null
+        ? userIsLoggedIn ? Home() : LoginScreen()
+        : Container(
+            child: Center(
+              child: LoginScreen(),
+            ),
+          );
   }
 }

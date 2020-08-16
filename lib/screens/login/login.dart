@@ -1,6 +1,9 @@
 import 'package:aptus/screens/sign_up/Sign_up.dart';
+import 'package:aptus/services/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/player/home.dart';
+import 'package:aptus/services/components.dart';
+import 'package:aptus/services/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:aptus/screens/graphics/apTextFormField.dart';
 import 'package:aptus/screens/login/login.i18n.dart';
@@ -54,6 +57,13 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       print('Form is invalid');
     }
+  }
+
+  bool userIsLoggedIn;
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override

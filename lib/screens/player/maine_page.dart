@@ -1,16 +1,16 @@
 import 'package:aptus/model/users.dart';
+import 'package:aptus/screens/player/user_details.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
 import 'package:aptus/services/current_user_auth.dart';
-
 import 'package:aptus/services/data_base.dart';
 import 'package:aptus/services/progress.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/services/header.dart';
 import 'package:aptus/services/location.dart';
 import 'package:provider/provider.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:aptus/screens/root.dart';
 
 // normally I 'm supposed to add the goe localisation to our app but it's taking me to much time of research, so I ll add it later on, we don't have enough user to need it soon
 class MainePage extends StatefulWidget {
@@ -20,11 +20,11 @@ class MainePage extends StatefulWidget {
   _MainePageState createState() => _MainePageState();
 }
 
-
 class _MainePageState extends State<MainePage> {
   Firestore _positionInFireStore = Firestore.instance;
   Geoflutterfire geo = Geoflutterfire();
-  Location location =  Location();
+  Location location = Location();
+  final usersRef = Firestore.instance.collection('users');
 
   double latitude;
   double longitude;
@@ -34,99 +34,122 @@ class _MainePageState extends State<MainePage> {
     super.initState();
     //function to delete old pos
     _addCurrentUserPosition();
-
   }
-  // Set GeoLocation Data for the current user we are going to use it later. it will help also to sort the list view
+
+  // Set GeoLocation Data for the current user
   _addCurrentUserPosition() async {
     Location location = Location();
-    final uid = await Provider.of<CurrentUser>(context,listen: false).getCurrentUID();
+    final uid =
+    await Provider.of<CurrentUser>(context, listen: false).getCurrentUID();
     await location.getCurrentLocation();
-    GeoFirePoint point = geo.point(latitude: location.latitude, longitude: location.longitude);
-    return _positionInFireStore.collection('users').document(uid).collection(
-        'UserPosition').document().setData({
+    GeoFirePoint point =
+    geo.point(latitude: location.latitude, longitude: location.longitude);
+    return _positionInFireStore
+        .collection('users')
+        .document(uid)
+        .collection('UserPosition')
+        .document()
+        .setData({
       'position': point.data,
       'Position Created': Timestamp.now(),
     });
   }
 
 // get users the collection location reference or query
-  Stream<QuerySnapshot> getUsersStreamSnapshots(
-      BuildContext context) async* {
-    yield* Firestore.instance
-        .collection('users'
-    ).snapshots();
+  Stream<QuerySnapshot> getUsersStreamSnapshots(BuildContext context) async* {
+    yield* Firestore.instance.collection('users').snapshots();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context, isAppTitle: true),
-      body: Container(
-          child:   FutureBuilder(
-            future: Provider.of<CurrentUser>(context).getUser(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return showHomePageWithUsers(snapshot.data);
-              } else {
-                return circularProgress();
-              }
-            },
-          )
-      ),
+      body: StreamBuilder(
+          stream: getUsersStreamSnapshots(context),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return CircularProgressIndicator();
+            return new ListView.builder(// I ll you use a GridView  later
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (BuildContext context,
+                    int index) => //to return the users matching current user sport
+                buildUserCard(context, snapshot.data.documents[index]));
+          }),
     );
-
   }
-  Widget displayUserSugestion(BuildContext context, DocumentSnapshot document) {
-    OurPlayer eachUsers = OurPlayer.fromDocument(document);
+
+  Widget buildUserCard(BuildContext context, DocumentSnapshot document) {
+    final ourPlayer = OurPlayer.fromSnapshot(document);
 
     return new Container(
+      width: 200,
       child: Card(
+        shape:
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        color: Colors.white,
         child: InkWell(
+          onTap:  () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => UserDetails(ourPlayer: ourPlayer)),);},
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(17.0),
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                  child: Row(children: <Widget>[
-                    Text(
-                      eachUsers.username,
-                      style:
-                      TextStyle(fontFamily: 'DM Sans',
-                          fontWeight: FontWeight.bold),
+                Column(
+                  children: <Widget>[
+                    Align(
+                        alignment: Alignment.center,child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(ourPlayer.username, style: new TextStyle(fontSize: 20.0),),
+                    )),
+                    Row(
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundImage:
+                          AssetImage('assets/images/anthony.jpg'),
+                        ),
+                        Container(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                ourPlayer.sport,
+                                style: new TextStyle(
+                                  fontSize: 15.0, fontWeight: FontWeight.w900,),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        Align(
+                            alignment: Alignment.centerLeft,child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(ourPlayer.level, style: new TextStyle(fontSize: 15.0),),
+                        )),
+                      ],
                     ),
-                    Spacer(),
-                  ]),
-                ),
+                    Align( alignment: Alignment.centerLeft,child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        ourPlayer.motivation,
+                        style: new TextStyle(
+                          fontSize: 15.0, fontWeight: FontWeight.w900,),
+                      ),
+                    ),
+                    ),],
+
+                )
+
+
               ],
             ),
+
           ),
-          onTap: () {
-            Navigator.pushNamed(context, SignUpScreen.id);
-          },
         ),
       ),
-    );
-  }
-  Widget showHomePageWithUsers(OurPlayer eachUsers) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: StreamBuilder(
-              stream: getUsersStreamSnapshots(context),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) return const Text("Loading...");
-                return new ListView.builder(
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        displayUserSugestion(context, snapshot.data.documents[index]));
-              }),
-        ),
-      ],
     );
   }
 }
-
-
-

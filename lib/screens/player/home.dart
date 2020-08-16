@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aptus/screens/player/event.dart';
 import 'package:aptus/screens/player/search.dart';
-import 'package:aptus/screens/player/chat.dart';
 import 'package:aptus/model/users.dart';
+import 'package:aptus/screens/player/chat/chat_screen.dart';
 
 OurPlayer currentUser;
 
