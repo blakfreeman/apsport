@@ -19,11 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  animator: 0.1.4
   cupertino_icons: ^0.1.2
   provider: ^4.0.5
-  timeago: 2.0.17
-  google_sign_in: ^4.1.4
   firebase_core: ^0.4.4+2
   firebase_auth: ^0.15.5+2
   cloud_firestore: ^0.13.0+1
@@ -36,6 +33,10 @@ dependencies:
   geoflutterfire: ^2.1.0
   geolocator: ^5.3.2+2
   shared_preferences: ^0.5.6+3
+
+
+
+
 
 
 dev_dependencies:
@@ -60,6 +61,7 @@ flutter:
     - assets/images/icons8-google-48.png
     - assets/images/icons8-facebook-circled-48.png
     - assets/images/anthony.jpg
+    - assets/images/send.png
 
 
 

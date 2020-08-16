@@ -1,5 +1,7 @@
 import 'package:aptus/screens/sign_up/Sign_up.dart';
+import 'package:aptus/services/data_base.dart';
 import 'package:aptus/services/helper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/player/home.dart';
 import 'package:aptus/services/components.dart';
@@ -141,6 +143,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               final user =
                               await _auth.signInWithEmailAndPassword(
                                   email: _email, password: _password);
+                              QuerySnapshot userInfoSnapshot =
+                              await OurDatabase().getUserInfoForChat(_emailController.text);
+                              HelperFunctions.saveUserNameSharedPreference(
+                                  userInfoSnapshot.documents[0].data["userName"]);
                               HelperFunctions.saveUserLoggedInSharedPreference(true);
                               if (user != null) {
                                 Navigator.pushNamed(context, Home.id);

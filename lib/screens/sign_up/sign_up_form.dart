@@ -1,6 +1,7 @@
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/current_user_auth.dart';
+import 'package:aptus/services/helper.dart';
 import 'package:aptus/services/list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,8 @@ void _signUpUser(String email, String password, BuildContext context,
     String _returnString = await _currentUser.signUpUser(username,
         email,password,age,gender,city,sport,level,moment,weekly,motivation);
     if (_returnString == "success") {
+      HelperFunctions.saveUserNameSharedPreference(_usernameController.text);
+
       Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Home()));
 
     } else {

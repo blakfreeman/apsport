@@ -63,7 +63,6 @@ class _MyAppState extends State<MyApp> {
           Home.id: (context) => Home(),
           SignUpScreen.id: (context) => SignUpScreen(),
           MainePage.id: (context) => MainePage(),
-          Search.id: (context) => Search(),
         },
       ),
     );

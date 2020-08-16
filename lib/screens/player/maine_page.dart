@@ -1,9 +1,6 @@
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/player/user_details.dart';
-import 'package:aptus/screens/sign_up/Sign_up.dart';
 import 'package:aptus/services/current_user_auth.dart';
-import 'package:aptus/services/data_base.dart';
-import 'package:aptus/services/progress.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +37,10 @@ class _MainePageState extends State<MainePage> {
   _addCurrentUserPosition() async {
     Location location = Location();
     final uid =
-    await Provider.of<CurrentUser>(context, listen: false).getCurrentUID();
+        await Provider.of<CurrentUser>(context, listen: false).getCurrentUID();
     await location.getCurrentLocation();
     GeoFirePoint point =
-    geo.point(latitude: location.latitude, longitude: location.longitude);
+        geo.point(latitude: location.latitude, longitude: location.longitude);
     return _positionInFireStore
         .collection('users')
         .document(uid)
@@ -68,11 +65,12 @@ class _MainePageState extends State<MainePage> {
           stream: getUsersStreamSnapshots(context),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return CircularProgressIndicator();
-            return new ListView.builder(// I ll you use a GridView  later
+            return new ListView.builder(
+                // I ll you use a GridView  later
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context,
-                    int index) => //to return the users matching current user sport
-                buildUserCard(context, snapshot.data.documents[index]));
+                        int index) => //to return the users matching current user sport
+                    buildUserCard(context, snapshot.data.documents[index]));
           }),
     );
   }
@@ -84,14 +82,16 @@ class _MainePageState extends State<MainePage> {
       width: 200,
       child: Card(
         shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         color: Colors.white,
         child: InkWell(
-          onTap:  () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => UserDetails(ourPlayer: ourPlayer)),);},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => UserDetails(ourPlayer: ourPlayer)),
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(17.0),
             child: Column(
@@ -99,16 +99,20 @@ class _MainePageState extends State<MainePage> {
                 Column(
                   children: <Widget>[
                     Align(
-                        alignment: Alignment.center,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(ourPlayer.username, style: new TextStyle(fontSize: 20.0),),
-                    )),
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            ourPlayer.username,
+                            style: new TextStyle(fontSize: 20.0),
+                          ),
+                        )),
                     Row(
                       children: <Widget>[
                         CircleAvatar(
                           radius: 20,
                           backgroundImage:
-                          AssetImage('assets/images/anthony.jpg'),
+                              AssetImage('assets/images/anthony.jpg'),
                         ),
                         Container(
                           child: Align(
@@ -118,35 +122,41 @@ class _MainePageState extends State<MainePage> {
                               child: Text(
                                 ourPlayer.sport,
                                 style: new TextStyle(
-                                  fontSize: 15.0, fontWeight: FontWeight.w900,),
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
                             ),
                           ),
                         ),
-
                         Align(
-                            alignment: Alignment.centerLeft,child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(ourPlayer.level, style: new TextStyle(fontSize: 15.0),),
-                        )),
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                ourPlayer.level,
+                                style: new TextStyle(fontSize: 15.0),
+                              ),
+                            )),
                       ],
                     ),
-                    Align( alignment: Alignment.centerLeft,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        ourPlayer.motivation,
-                        style: new TextStyle(
-                          fontSize: 15.0, fontWeight: FontWeight.w900,),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          ourPlayer.motivation,
+                          style: new TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
                       ),
                     ),
-                    ),],
-
+                  ],
                 )
-
-
               ],
             ),
-
           ),
         ),
       ),

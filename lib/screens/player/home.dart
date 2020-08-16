@@ -8,8 +8,6 @@ import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/player/chat/chat_screen.dart';
 
 
-OurPlayer currentUser;
-
 
 class Home extends StatefulWidget {
   static const String id = 'home';
