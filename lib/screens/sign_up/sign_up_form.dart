@@ -1,6 +1,7 @@
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/current_user_auth.dart';
+import 'package:aptus/services/helper.dart';
 import 'package:aptus/services/list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +14,6 @@ import 'package:aptus/screens/graphics/apRoundedButtonLarge.dart';
 import 'package:aptus/screens/graphics/apDropdownButtonFormField.dart';
 
 class OurSignUpForm extends StatefulWidget {
-
-
   @override
   _OurSignUpFormState createState() => _OurSignUpFormState();
 }
@@ -396,72 +395,29 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                 ApRoundedButtonLarge(
                   title: 'Register'.i18n.toUpperCase(),
                   onPressed: () {
-                    //if (_passController.text == _confirmPassController.text) {
-=======
-              ],),
-            ],
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Text(
-            'APTUS ',
-            style: TextStyle(
-                fontFamily: 'DM Sans',
-                fontWeight: FontWeight.bold,
-                fontSize: 30.0,
-                color: Colors.white),
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          GestureDetector(
-            onTap: () {
-
-    },
-            child: Text(
-              'Already have an account? ',
-              style: TextStyle(
-                  fontFamily: 'DM Sans',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15.0,
-                  color: Colors.white),
-            ),
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              OurRoundedButtonLarge(
-                title: 'Meet and play',
-                colour: Colors.blueAccent,
-                onPressed: () {
-                  if (_passController.text == _confirmPassController.text) {
->>>>>>> 20461af54f10c56b75ff9f3702c29cbd191a0057
-                    _signUpUser(
-                        _emailController.text,
-                        _passController.text,
-                        context,
-                        _usernameController.text,
-                        _agesController.text,
-                        _sexController.text,
-                        _cityController.text,
-                        _sportController.text,
-                        _levelController.text,
-                        _momentController.text,
-                        _weeklyController.text,
-                        _myReasonController.text);
-                    // } else {
+                    if (_passController.text == _confirmPassController.text) {
+                      _signUpUser(
+                          _emailController.text,
+                          _passController.text,
+                          context,
+                          _usernameController.text,
+                          _agesController.text,
+                          _sexController.text,
+                          _cityController.text,
+                          _sportController.text,
+                          _levelController.text,
+                          _momentController.text,
+                          _weeklyController.text,
+                          _myReasonController.text);
+                    } else {
 //                      Scaffold.of(context).showSnackBar(
 //                        SnackBar(
 //                          content: Text("Passwords do not match"),
 //                          duration: Duration(seconds: 4),
 //                        ),
 //                      );
-                    //}
+                      //}
+                    }
                   },
                 ),
               ],

@@ -1,17 +1,29 @@
 import 'package:aptus/model/users.dart';
-import 'package:aptus/services/components.dart';
+import 'package:aptus/services/constants.dart';
+import 'package:aptus/services/data_base.dart';
+import 'package:aptus/services/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:aptus/screens/player/chat/chat_screen.dart';
 
-import 'chat/chat_screen.dart';
-
-class UserDetails extends StatelessWidget {
+class UserDetails extends StatefulWidget {
   final OurPlayer ourPlayer;
-  final String chatRoomId;
-  UserDetails({Key key, @required this.ourPlayer,this.chatRoomId}) : super(key: key);
+  UserDetails({
+    Key key,
+    @required this.ourPlayer,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  _UserDetailsState createState() => _UserDetailsState();
+}
+
+class _UserDetailsState extends State<UserDetails> {
+  OurDatabase ourDatabase = OurDatabase();
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
     return Scaffold(
       body: Center(
         child: CustomScrollView(
@@ -30,7 +42,7 @@ class UserDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.username,
+                    widget.ourPlayer.username,
                     style: TextStyle(
                         fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
                   ),
@@ -38,14 +50,14 @@ class UserDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.age,
+                    widget.ourPlayer.age,
                     style: TextStyle(fontFamily: 'DM Sans'),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.gender,
+                    widget.ourPlayer.gender,
                     style: TextStyle(
                         fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
                   ),
@@ -53,7 +65,7 @@ class UserDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.city,
+                    widget.ourPlayer.city,
                     style: TextStyle(
                         fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
                   ),
@@ -61,7 +73,7 @@ class UserDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.sport,
+                    widget.ourPlayer.sport,
                     style: TextStyle(
                         fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
                   ),
@@ -69,7 +81,7 @@ class UserDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.level,
+                    widget.ourPlayer.level,
                     style: TextStyle(
                         fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
                   ),
@@ -77,7 +89,7 @@ class UserDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.moment,
+                    widget.ourPlayer.moment,
                     style: TextStyle(
                         fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
                   ),
@@ -85,7 +97,7 @@ class UserDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.weekly,
+                    widget.ourPlayer.weekly,
                     style: TextStyle(
                         fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
                   ),
@@ -93,7 +105,7 @@ class UserDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    ourPlayer.motivation,
+                    widget.ourPlayer.motivation,
                     style: TextStyle(
                         fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
                   ),
@@ -103,13 +115,17 @@ class UserDetails extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => Chat(
-              chatRoomId: chatRoomId,
-            )
-        ));
-      },child: Icon(Icons.textsms), ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Chat(),
+            ),
+          );
+        },
+        child: Icon(Icons.textsms),
+      ),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:aptus/screens/sign_up/Sign_up.dart';
+import 'package:aptus/services/data_base.dart';
 import 'package:aptus/services/helper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/player/home.dart';
 import 'package:aptus/services/components.dart';
