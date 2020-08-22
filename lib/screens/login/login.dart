@@ -10,7 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:aptus/screens/graphics/apTextFormField.dart';
 import 'package:aptus/screens/login/login.i18n.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:aptus/services/data_base.dart';
 import 'package:aptus/screens/graphics/apRoundedButtonLarge.dart';
 
 //Todo use the provider to log in, this way works but this is not the efficient way to do it!
@@ -35,7 +34,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 class _LoginScreenState extends State<LoginScreen> {
   bool _userExist = false;
   checkUserValue<bool>(String user) {
-    doesMailAlreadyExist(user).then((val) {
+    OurDatabase.doesMailAlreadyExist(user).then((val) {
       if (val) {
         print("UserName Already Exits");
         _userExist = val;

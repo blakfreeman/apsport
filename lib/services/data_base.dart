@@ -61,6 +61,26 @@ class OurDatabase extends ChangeNotifier {
     return retVal;
   }
 
+  static Future<bool> doesNameAlreadyExist(String name) async {
+    final QuerySnapshot result = await Firestore.instance
+        .collection('users')
+        .where('username', isEqualTo: name)
+        .limit(1)
+        .getDocuments();
+    final List<DocumentSnapshot> documents = result.documents;
+    return documents.length == 1;
+  }
+
+  static Future<bool> doesMailAlreadyExist(String name) async {
+    final QuerySnapshot result = await Firestore.instance
+        .collection('users')
+        .where('email', isEqualTo: name)
+        .limit(1)
+        .getDocuments();
+    final List<DocumentSnapshot> documents = result.documents;
+    return documents.length == 1;
+  }
+
   // users list from snapshot
   List<OurPlayer> _ourPlayerListFormSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -84,17 +104,6 @@ class OurDatabase extends ChangeNotifier {
   Stream<List<OurPlayer>> get player {
     return usersRef.snapshots().map(_ourPlayerListFormSnapshot);
   }
-}
-
-Future<bool> doesNameAlreadyExist(String name) async {
-  final QuerySnapshot result = await Firestore.instance
-      .collection('users')
-      .where('username', isEqualTo: name)
-      .limit(1)
-      .getDocuments();
-  final List<DocumentSnapshot> documents = result.documents;
-  return documents.length == 1;
-}
 
   Future<void> addUserInfo(userData) async {
     Firestore.instance.collection("users").add(userData).catchError((e) {
@@ -279,14 +288,4 @@ Future<bool> doesNameAlreadyExist(String name) async {
         .where('users', arrayContains: itIsMyName)
         .snapshots();
   }
-}
-
-Future<bool> doesMailAlreadyExist(String name) async {
-  final QuerySnapshot result = await Firestore.instance
-      .collection('users')
-      .where('email', isEqualTo: name)
-      .limit(1)
-      .getDocuments();
-  final List<DocumentSnapshot> documents = result.documents;
-  return documents.length == 1;
 }

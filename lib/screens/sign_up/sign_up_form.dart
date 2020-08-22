@@ -36,7 +36,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 bool _userExist = false;
 bool _mailExist = false;
 checkUserValue<bool>(String user) {
-  doesNameAlreadyExist(user).then((val) {
+  OurDatabase.doesNameAlreadyExist(user).then((val) {
     if (val) {
       print("UserName Already Exits");
       _userExist = val;
@@ -49,7 +49,7 @@ checkUserValue<bool>(String user) {
 }
 
 checkMailValue<bool>(String user) {
-  doesMailAlreadyExist(user).then((val) {
+  OurDatabase.doesMailAlreadyExist(user).then((val) {
     if (val) {
       print("Email Already Exits");
       _mailExist = val;
