@@ -19,11 +19,11 @@ extension Localization on String {
         "fr_be": "Mot de passe",
       } +
       {
-        "en_us": "Sign in",
+        "en_us": "Log in",
         "fr_be": "Me connecter",
       } +
       {
-        "en_us": "Don't have an account yet? Sign up ",
+        "en_us": "Don't have an account yet? Register ",
         "fr_be": "Pas encore de compte? Inscris-toi ",
       } +
       {

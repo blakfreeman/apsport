@@ -2,25 +2,33 @@ import 'package:aptus/services/list.i18n.dart';
 
 class Sport {
   List<String> sport = [
-    'Football',
-    'Tennis',
-    'Judo ',
-    'Fitness',
-    'BJJ',
-    'BasketBall',
-    'Yoga',
-    'Dance',
-    'Pole Dance',
-    'Gym',
+    'BJJ'.i18n,
+    'Boxing'.i18n,
+    'Basketball'.i18n,
+    'Cycling/Spinning'.i18n,
+    'Crossfit'.i18n,
+    'Dance'.i18n,
+    'Fitness'.i18n,
+    'Football'.i18n,
+    'Gym'.i18n,
+    'Hockey'.i18n,
+    'Judo'.i18n,
+    'Pilates'.i18n,
+    'Pole Dance'.i18n,
+    'Running'.i18n,
+    'Swimming'.i18n,
+    'Tennis'.i18n,
+    'Yoga'.i18n,
+    'Other'.i18n,
   ];
 }
 
 class SportLevel {
   List<String> level = [
-    'Novice',
-    'Good',
-    'Pro',
-    'Expert',
+    'Beginner'.i18n,
+    'Intermediate'.i18n,
+    'Advanced'.i18n,
+    'Expert'.i18n,
   ];
 }
 
@@ -57,32 +65,49 @@ class Ages {
 
 class Moment {
   List<String> best = [
-    'Morning',
-    'Afternoon',
-    'Evening',
-    'Night',
-    'Anytime',
-    "I don't know",
+    'Morning'.i18n,
+    'Lunch break'.i18n,
+    'Afternoon'.i18n,
+    'Evening'.i18n,
+    'Night'.i18n,
+    'Anytime'.i18n,
+    "I don't know".i18n,
   ];
 }
 
 class WeekOrWeekEnd {
   List<String> best = [
-    'Week',
-    'Weekend',
-    "both",
-    "I don' know",
+    'Week'.i18n,
+    'Weekend'.i18n,
+    "Both".i18n,
+    "I don't know".i18n,
   ];
 }
 
 class MyReason {
   List<String> reason = [
-    'To challenge me',
-    'lose weight',
-    'having more energy',
-    'meet someone and have fun',
-    'having fun',
-    'I want to compete with others',
-    "I don't have a special reason",
+    "Surpass myself".i18n,
+    "Loose weight".i18n,
+    "Gain muscle mass".i18n,
+    "Be fit".i18n,
+    "Be summer-ready".i18n,
+    "Get my body back after giving birth".i18n,
+    "Fun".i18n,
+    "Fight a disease".i18n,
+    "Practise with nice people".i18n,
+    "Find a sporting rhythm".i18n,
+    "Be healthier".i18n,
+    "Have a better lifestyle".i18n,
+    "Be a better version of myself".i18n,
+    "Clear my head".i18n,
+    "Channel my energy",
+    "Have a better relation with food".i18n,
+    "Be a winner".i18n,
+    "Prepare for a competition".i18n,
+    "Have a healthy mind in a healthy body".i18n,
+    'Competing with others'.i18n,
+    "Curiosity".i18n,
+    "No special goal".i18n,
+    "Other".i18n,
   ];
 }

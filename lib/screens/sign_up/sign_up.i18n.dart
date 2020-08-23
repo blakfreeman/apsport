@@ -3,7 +3,7 @@ import 'package:i18n_extension/i18n_extension.dart';
 extension Localization on String {
   static var _t = Translations("en_us") +
       {
-        "en_us": "Sign up",
+        "en_us": "Register",
         "fr_be": "M'inscrire",
       } +
       {
@@ -43,8 +43,8 @@ extension Localization on String {
         "fr_be": "Confirmation du mot de passe",
       } +
       {
-        "en_us": "Register",
-        "fr_be": "Enregistrer",
+        "en_us": "Save",
+        "fr_be": "Sauvegarder",
       } +
       {
         "en_us": "Passwords don't match",
@@ -87,12 +87,32 @@ extension Localization on String {
         "fr_be": "Niveau sportif",
       } +
       {
-        "en_us": "Tell us about your level for your main sport",
+        "en_us": "Share your level for your main sport",
         "fr_be": "Partage ton niveau dans ton sport principal",
       } +
       {
-        "en_us": "Goodbye",
-        "pt_br": "Adeus",
+        "en_us": "Tell us about the day(s) you want to practice",
+        "fr_be": "Dis-nous quel(s) jour(s) tu veux pratiquer",
+      } +
+      {
+        "en_us": "Best days for sport",
+        "fr_be": "Meilleurs jours pour le sport",
+      } +
+      {
+        "en_us": "Tell us at what time you are available for sport",
+        "fr_be": "Dis-nous à quels moments tu veux pratiquer",
+      } +
+      {
+        "en_us": "Best time to play",
+        "fr_be": "Meilleurs moments pour le sport",
+      } +
+      {
+        "en_us": "What's your Motivation?",
+        "fr_be": "Qu'est ce qui te motive?",
+      } +
+      {
+        "en_us": "Goal",
+        "fr_be": "Objectif",
       };
 
   String get i18n => localize(this, _t);

@@ -258,8 +258,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                       child: ApDropdownButtonFormField(
                         validator: (val) {
                           if (val.isEmpty) {
-                            return 'Tell us about your level for your main sport'
-                                .i18n;
+                            return 'Share your level for your main sport'.i18n;
                           } else {
                             return null;
                           }
@@ -287,12 +286,13 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                       child: ApDropdownButtonFormField(
                         validator: (val) {
                           if (val.isEmpty) {
-                            return 'Tell us about the day(s) you want to practice';
+                            return 'Tell us about the day(s) you want to practice'
+                                .i18n;
                           } else {
                             return null;
                           }
                         },
-                        hintText: 'Best day for sport',
+                        hintText: 'Best days for sport'.i18n,
                         onChanged: (String value) {
                           _weeklyController.text = value;
                         },
@@ -311,12 +311,13 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                       child: ApDropdownButtonFormField(
                         validator: (val) {
                           if (val.isEmpty) {
-                            return 'Tell us when you are available for sport';
+                            return 'Tell us at what time you are available for sport'
+                                .i18n;
                           } else {
                             return null;
                           }
                         },
-                        hintText: 'Best time to play',
+                        hintText: 'Best time to play'.i18n,
                         onChanged: (String value) {
                           _momentController.text = value;
                         },
@@ -339,12 +340,12 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                       child: ApDropdownButtonFormField(
                         validator: (val) {
                           if (val.isEmpty) {
-                            return 'Select your Motivation';
+                            return "What's your Motivation?".i18n;
                           } else {
                             return null;
                           }
                         },
-                        hintText: 'Motivation',
+                        hintText: 'Goal'.i18n,
                         onChanged: (String value) {
                           _myReasonController.text = value;
                         },
@@ -365,7 +366,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                         value: _cityController.text,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return 'Select the closest city';
+                            return 'Select the closest city'.i18n;
                           } else {
                             return null;
                           }
@@ -386,14 +387,14 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
               ],
             ),
             SizedBox(
-              height: 20.0,
+              height: 30.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 ApRoundedButtonLarge(
-                  title: 'Register'.i18n.toUpperCase(),
+                  title: 'Save'.i18n.toUpperCase(),
                   onPressed: () {
                     if (_passController.text == _confirmPassController.text) {
                       _signUpUser(

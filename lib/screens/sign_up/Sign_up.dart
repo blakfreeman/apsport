@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 130.0),
                     child: Text(
-                      'Sign up'.i18n.toUpperCase(),
+                      'Register'.i18n.toUpperCase(),
                       style: TextStyle(
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.bold,

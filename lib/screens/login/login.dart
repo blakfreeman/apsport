@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             Container(
                               child: ApRoundedButtonLarge(
-                                title: 'Sign in'.i18n.toUpperCase(),
+                                title: 'Log in'.i18n.toUpperCase(),
                                 onPressed: () async {
                                   setState(() {
                                     showSpinner = true;
@@ -178,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               //this need to be bold or bigger
                               child: Text.rich(
                                 TextSpan(
-                                  text: "Don't have an account yet? Sign up "
+                                  text: "Don't have an account yet? Register "
                                       .i18n,
                                   style: TextStyle(
                                       fontSize: 16,
