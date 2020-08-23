@@ -33,6 +33,8 @@ class ApDropdownButtonFormField extends StatelessWidget {
         focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: kForegroundColor)),
       ),
+      iconEnabledColor: kHighlightColor,
+      isExpanded: true,
     );
   }
 }
