@@ -54,6 +54,7 @@ class _MainePageState extends State<MainePage> {
 
 // get users the collection location reference or query
   Stream<QuerySnapshot> getUsersStreamSnapshots(BuildContext context) async* {
+
     yield* Firestore.instance.collection('users').snapshots();
   }
 
@@ -77,7 +78,7 @@ class _MainePageState extends State<MainePage> {
 
   Widget buildUserCard(BuildContext context, DocumentSnapshot document) {
     final ourPlayer = OurPlayer.fromSnapshot(document);
-
+///creat the of to avoid the fact that machting user can be saw
     return new Container(
       width: 200,
       child: Card(

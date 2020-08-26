@@ -1,5 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+class UsersModel {
+  final List<OurPlayer> users;
+
+  UsersModel({this.users});
+
+  factory UsersModel.fromJson(List<dynamic> json) {
+    var users = json.map((userItem) => OurPlayer.fromJson(userItem)).toList();
+    return UsersModel(users: users);
+  }
+}
+
+
 class OurPlayer {
   String uid;
   String username;
@@ -30,6 +42,32 @@ class OurPlayer {
     this.accountCreated,
   });
 
+
+  factory OurPlayer.fromJson(dynamic json) {
+    return OurPlayer(
+      uid: json['uid'].toString(),
+      username: json['username'],
+      email: json['email'].toString(),
+      gender: json['gender'],
+      age: json['age'].toString(),
+      city: json['city'],
+      sport: json['sport'],
+      level: json['level'],
+      moment: json['moment'],
+      motivation: json['motivation'],
+      accountCreated: json['accountCreated'],
+
+
+
+
+
+
+
+
+
+    );
+  }
+
   Map<String, dynamic> toJson() => {
     'uid': uid,
     'username': username,
@@ -43,7 +81,7 @@ class OurPlayer {
     'weekly': weekly,
     'motivation': motivation,
 
-      };
+  };
 
 
 
