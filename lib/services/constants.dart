@@ -46,10 +46,15 @@ const kLargeButtonTextStyle = TextStyle(
 const Color kBackgroundColor = Color(0xFF000841);
 const Color kForegroundColor = Color(0xFFE0E4FF);
 const Color kHighlightColor = Color(0xFF8A95FF);
+const Color kHighlightAltColor = Color(0xFF152EB7);
 const Color kDisabledColor = Color(0xFFAF9CD3);
+const Color kDisabledAltColor = Color(0xFF8068BC);
+const Color kLightestColor = Color(0xFFF5FAFF);
 const Color kDarkestColor = Color(0xFF081040);
 const Color kValidateColor = Color(0xFF29BF12);
 const Color kErrorColor = Color(0xFFFF220C);
+const Color kDarkGreen = Color(0xFF657B23);
+const Color kElectricBlue = Color(0xFF046EE7);
 
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,

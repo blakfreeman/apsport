@@ -19,6 +19,7 @@ class ApRoundedButtonLarge extends StatelessWidget {
           onPressed: onPressed,
           minWidth: 270.0,
           height: 42.0,
+          highlightColor: kDisabledColor,
           child: Text(
             title,
             style: TextStyle(
