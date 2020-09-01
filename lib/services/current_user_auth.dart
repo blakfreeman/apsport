@@ -38,6 +38,10 @@ final usersRef = Firestore.instance.collection('users');
     return (await _auth.currentUser()).uid;
   }
 
+  Future<String> getCurrentEmail() async {
+    return (await _auth.currentUser()).email;
+  }
+
   Future getUser() async {
     return await _auth.currentUser();
   }

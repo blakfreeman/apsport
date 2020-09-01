@@ -1,10 +1,12 @@
 import 'package:aptus/model/users.dart';
 import 'package:aptus/services/constants.dart';
+import 'package:aptus/services/current_user_auth.dart';
 import 'package:aptus/services/data_base.dart';
 import 'package:aptus/services/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/player/chat/chat_screen.dart';
+import 'package:provider/provider.dart';
 
 class UserDetails extends StatefulWidget {
   final OurPlayer ourPlayer;
@@ -19,6 +21,37 @@ class UserDetails extends StatefulWidget {
 
 class _UserDetailsState extends State<UserDetails> {
   OurDatabase ourDatabase = OurDatabase();
+
+
+  sendMessage() async{
+    final currentUserEmail = await Provider.of<CurrentUser>(context, listen: false).getCurrentEmail();
+    List<String> users = [currentUserEmail,widget.ourPlayer.email];
+
+    String chatRoomId = getChatRoomId(currentUserEmail,widget.ourPlayer.email);
+
+    Map<String, dynamic> chatRoom = {
+      "users": users,
+      "chatRoomId" : chatRoomId,
+    };
+
+    ourDatabase.addChatRoom(chatRoom, chatRoomId);
+
+    Navigator.push(context, MaterialPageRoute(
+        builder: (context) => Chat(
+          chatRoomId: chatRoomId,ourPlayer: widget.ourPlayer, currentUserEmail: currentUserEmail ,
+        )
+    ));
+
+  }
+  getChatRoomId(String a, String b) {
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
+    }
+  }
+
+
 
   @override
   Widget build(
@@ -116,13 +149,7 @@ class _UserDetailsState extends State<UserDetails> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Chat(),
-            ),
-          );
+        onPressed: () { sendMessage();
         },
         child: Icon(Icons.textsms),
       ),

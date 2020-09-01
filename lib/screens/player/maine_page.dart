@@ -2,6 +2,7 @@ import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/player/user_details.dart';
 import 'package:aptus/services/current_user_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/services/header.dart';
@@ -9,28 +10,39 @@ import 'package:aptus/services/location.dart';
 import 'package:provider/provider.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
+
+
 // normally I 'm supposed to add the goe localisation to our app but it's taking me to much time of research, so I ll add it later on, we don't have enough user to need it soon
+FirebaseUser loggedInUser;
 class MainePage extends StatefulWidget {
+
   static const String id = 'maine_page';
+
 
   @override
   _MainePageState createState() => _MainePageState();
 }
 
 class _MainePageState extends State<MainePage> {
+
   Firestore _positionInFireStore = Firestore.instance;
   Geoflutterfire geo = Geoflutterfire();
   Location location = Location();
   final usersRef = Firestore.instance.collection('users');
+  final _auth = FirebaseAuth.instance;
+
 
   double latitude;
   double longitude;
+
+
 
   @override
   void initState() {
     super.initState();
     //function to delete old pos
     _addCurrentUserPosition();
+    getCurrentUser();
   }
 
   // Set GeoLocation Data for the current user
@@ -52,11 +64,29 @@ class _MainePageState extends State<MainePage> {
     });
   }
 
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
 // get users the collection location reference or query
   Stream<QuerySnapshot> getUsersStreamSnapshots(BuildContext context) async* {
 
+
     yield* Firestore.instance.collection('users').snapshots();
   }
+
+  Stream<QuerySnapshot> currentUserStreamSnapshots(BuildContext context) async* {
+final uid = await Provider.of<CurrentUser>(context).getCurrentUID();
+    yield* Firestore.instance.document(uid).collection('users').snapshots();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +95,7 @@ class _MainePageState extends State<MainePage> {
       body: StreamBuilder(
           stream: getUsersStreamSnapshots(context),
           builder: (context, snapshot) {
+
             if (!snapshot.hasData) return CircularProgressIndicator();
             return new ListView.builder(
                 // I ll you use a GridView  later
@@ -78,8 +109,11 @@ class _MainePageState extends State<MainePage> {
 
   Widget buildUserCard(BuildContext context, DocumentSnapshot document) {
     final ourPlayer = OurPlayer.fromSnapshot(document);
-///creat the of to avoid the fact that machting user can be saw
-    return new Container(
+///create a function to avoid the fact that current user  can be see himself.
+    if (document['uid'] == loggedInUser.uid) {
+      return Container();
+    } else {
+      return Container(
       width: 200,
       child: Card(
         shape:
@@ -163,4 +197,5 @@ class _MainePageState extends State<MainePage> {
       ),
     );
   }
+}
 }
