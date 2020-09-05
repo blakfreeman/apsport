@@ -316,8 +316,7 @@ class _ProfileState extends State<Profile> {
       user.level = result.data['level'];
       user.moment = result.data['moment'];
       user.weekly = result.data['weekly'];
-      user.motivation =
-      result.data['motivation']; // need to find a method for all
+      user.motivation = result.data['motivation']; // need to find a method for all
     });
   }
 

@@ -1,3 +1,4 @@
+import 'package:aptus/screens/player/chat/chat_room.dart';
 import 'package:aptus/screens/player/maine_page.dart';
 import 'package:aptus/screens/player/user_profile.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _Home2State extends State<Home> {
           MainePage(),
           Search(),
           Event(),
-          Chat(),
+          ChatRoom(),
           Profile(),
         ],
       ),

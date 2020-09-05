@@ -1,3 +1,4 @@
+
 import 'package:aptus/model/users.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/current_user_auth.dart';
@@ -55,8 +56,8 @@ class _UserDetailsState extends State<UserDetails> {
 
   @override
   Widget build(
-    BuildContext context,
-  ) {
+      BuildContext context,
+      ) {
     return Scaffold(
       body: Center(
         child: CustomScrollView(
