@@ -211,8 +211,11 @@ class _MainePageState extends State<MainePage> {
 
   Widget buildUserCard(BuildContext context, DocumentSnapshot document) {
     final ourPlayer = OurPlayer.fromSnapshot(document);
-
-    return new ApUserCard(
+    //current user can't see himself
+    if (document['uid'] == loggedInUser.uid) {
+      return Container();
+    } else {
+    return  ApUserCard(
       name: ourPlayer.username,
       sport: ourPlayer.sport,
       level: ourPlayer.level,
@@ -229,3 +232,5 @@ class _MainePageState extends State<MainePage> {
     );
   }
 }
+}
+

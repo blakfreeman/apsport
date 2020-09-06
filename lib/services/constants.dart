@@ -2,6 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
+
+
+class Constants{
+
+  static String myName = "";
+}
+
+
 const textInputDecoration = InputDecoration(
   labelStyle: TextStyle(color: Colors.white),
   enabledBorder: OutlineInputBorder(
