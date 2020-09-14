@@ -1,6 +1,7 @@
 import 'package:aptus/screens/player/chat/chat_room.dart';
 import 'package:aptus/screens/player/maine_page.dart';
 import 'package:aptus/screens/player/user_profile.dart';
+import 'package:aptus/services/constants.dart';
 import 'package:flutter/material.dart';
 //import 'package:aptus/screens/profile/user_profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:aptus/screens/player/event.dart';
 import 'package:aptus/screens/player/search.dart';
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/player/chat/chat_screen.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 OurPlayer currentUser;
 
@@ -32,35 +34,53 @@ class _Home2State extends State<Home> {
         onPageChanged: onPageChanged,
         children: <Widget>[
           MainePage(),
-          Search(),
+          //Search(),
           Event(),
           ChatRoom(),
           Profile(),
         ],
       ),
-      bottomNavigationBar: CupertinoTabBar(
-          onTap: navigationTapped,
-          currentIndex: _page,
-          activeColor: Theme.of(context).primaryColor,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.near_me),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.event,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+        child: CupertinoTabBar(
+            backgroundColor: kDarkestColor,
+            onTap: navigationTapped,
+            currentIndex: _page,
+            activeColor: kForegroundColor,
+            inactiveColor: kDisabledAltTransColor,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home,
+                  size: _page == 0 ? 40 : 32,
+                ),
               ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble_outline),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-            ),
-          ]),
+              /*BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+              ),*/
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.event,
+                  size: _page == 1 ? 40 : 32,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  MdiIcons.chat,
+                  size: _page == 2 ? 40 : 32,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.person,
+                  size: _page == 3 ? 40 : 32,
+                ),
+              ),
+            ]),
+      ),
     );
   }
 
