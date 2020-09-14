@@ -34,7 +34,7 @@ class ApUserCard extends StatelessWidget {
                 topLeft: Radius.circular(20.0),
                 bottomLeft: Radius.circular(20.0),
               ),
-              child: Image.asset(
+              child: Image.network(
                 pic,
                 width: 100,
                 height: 100,

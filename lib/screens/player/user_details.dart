@@ -1,4 +1,3 @@
-
 import 'package:aptus/model/users.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/current_user_auth.dart';
@@ -29,6 +28,7 @@ class _UserDetailsState extends State<UserDetails> {
     List<String> users = [currentUserEmail,widget.ourPlayer.email];
 
     String chatRoomId = getChatRoomId(currentUserEmail,widget.ourPlayer.email);
+///test pour garder un seul nom dans le chat room id
 
     Map<String, dynamic> chatRoom = {
       "users": users,
@@ -39,7 +39,7 @@ class _UserDetailsState extends State<UserDetails> {
 
     Navigator.push(context, MaterialPageRoute(
         builder: (context) => Chat(
-          chatRoomId: chatRoomId,ourPlayer: widget.ourPlayer, currentUserEmail: currentUserEmail ,
+          chatRoomId: chatRoomId,ourPlayer: widget.ourPlayer, currentUserEmail: currentUserEmail,
         )
     ));
 
@@ -67,7 +67,7 @@ class _UserDetailsState extends State<UserDetails> {
               backgroundColor: Colors.blueAccent,
               expandedHeight: 350.0,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset('assets/images/anthony.jpg'),
+                background: Image.network(widget.ourPlayer.photoUrl),
               ),
             ),
             SliverFixedExtentList(
