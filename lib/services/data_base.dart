@@ -8,8 +8,7 @@ class OurDatabase extends ChangeNotifier {
   OurDatabase({this.uid});
 
   final usersRef = Firestore.instance.collection('users');
-  final CollectionReference groupCollection =
-  Firestore.instance.collection('groups');
+
 
 //Todo create the same for the coaches
   Future<String> createPlayer(OurPlayer user) async {
@@ -18,6 +17,7 @@ class OurDatabase extends ChangeNotifier {
     try {
       await usersRef.document(user.uid).setData({
         'uid': user.uid,
+        'photoUrl':user.photoUrl,
         'username': user.username,
         'email': user.email,
         'age': user.age,
@@ -149,7 +149,7 @@ return
   }
 
   getUserChats(String itIsMyName) async {
-    return  await Firestore.instance
+    return  Firestore.instance
         .collection("chatRoom")
         .where('users', arrayContains: itIsMyName)
         .snapshots();

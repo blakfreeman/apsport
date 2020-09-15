@@ -1,3 +1,4 @@
+import 'package:aptus/model/users.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/current_user_auth.dart';
 import 'package:aptus/services/data_base.dart';
@@ -42,12 +43,12 @@ class _ChatRoomState extends State<ChatRoom> {
   }
 
   getUserInfogetChats() async {
-    String chatRoomId;
-    OurDatabase().getUserChats(chatRoomId).then((snapshots) {
+    Constants.myName = await Provider.of<CurrentUser>(context, listen: false).getCurrentEmail() ;
+    OurDatabase().getUserChats(Constants.myName).then((snapshots) {
       setState(() {
         chatRooms = snapshots;
         print(
-            "we got the data + ${chatRooms.toString()} this is name  $chatRoomId");
+            "we got the data + ${chatRooms.toString()} this is name  ${Constants.myName}");
       });
     });
   }
@@ -67,8 +68,9 @@ class _ChatRoomState extends State<ChatRoom> {
 class ChatRoomsTile extends StatelessWidget {
   final String userName;
   final String chatRoomId;
+  final OurPlayer ourPlayer;
 
-  ChatRoomsTile({this.userName,@required this.chatRoomId});
+  ChatRoomsTile({this.userName,@required this.chatRoomId,this.ourPlayer});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +79,7 @@ class ChatRoomsTile extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(
             builder: (context) => Chat(
               chatRoomId: chatRoomId,
+
             )
         ));
       },
@@ -109,7 +112,6 @@ class ChatRoomsTile extends StatelessWidget {
                     fontSize: 16,
                     fontFamily: 'OverpassRegular',
                     fontWeight: FontWeight.w300)),
-
           ],
         ),
       ),

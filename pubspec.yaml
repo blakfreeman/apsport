@@ -31,6 +31,8 @@ dependencies:
   modal_progress_hud: ^0.1.3
   progress_hud: ^1.1.0
   cached_network_image:
+  image_picker: ^0.6.7+7
+  image_cropper: ^1.3.1
   firebase_storage: ^3.1.3
   font_awesome_flutter: ^8.4.0
   flutter_datetime_picker:
@@ -39,8 +41,9 @@ dependencies:
   i18n_extension:
   email_validator: ^1.0.0
   shared_preferences: ^0.5.6+3
-
-
+  path_provider: ^1.6.14
+  image: ^2.0.7
+  uuid: ^2.2.2
 
 
 
@@ -71,6 +74,9 @@ flutter:
     - family: Roboto Light Italic
       fonts:
         - asset: assets/fonts/Roboto-LightItalic.ttf
+    - family: Roboto Bold
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
   assets:
     - assets/images/
 

@@ -7,6 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/player/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:aptus/screens/player/user_details.i18n.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+//import 'package:aptus/screens/sign_up/sign_up.i18n.dart';
+//import 'package:aptus/services/list.i18n.dart';
 
 class UserDetails extends StatefulWidget {
   final OurPlayer ourPlayer;
@@ -30,6 +34,8 @@ class _UserDetailsState extends State<UserDetails> {
 
     String chatRoomId = getChatRoomId(currentUserEmail, widget.ourPlayer.email);
 
+    ///test pour garder un seul nom dans le chat room id
+
     Map<String, dynamic> chatRoom = {
       "users": users,
       "chatRoomId": chatRoomId,
@@ -38,13 +44,15 @@ class _UserDetailsState extends State<UserDetails> {
     ourDatabase.addChatRoom(chatRoom, chatRoomId);
 
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Chat(
-                  chatRoomId: chatRoomId,
-                  ourPlayer: widget.ourPlayer,
-                  currentUserEmail: currentUserEmail,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => Chat(
+          chatRoomId: chatRoomId,
+          ourPlayer: widget.ourPlayer,
+          currentUserEmail: currentUserEmail,
+        ),
+      ),
+    );
   }
 
   getChatRoomId(String a, String b) {
@@ -68,6 +76,10 @@ class _UserDetailsState extends State<UserDetails> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: kDarkestColor, //change your color here
+          ),
+          elevation: 0,
           title: Text(
             'Player Profile',
             style: TextStyle(
@@ -83,15 +95,19 @@ class _UserDetailsState extends State<UserDetails> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Image.asset(
-                    'assets/images/anthony.jpg',
-                    height: 180.0,
+                  FadeInImage(
+                    image: widget.ourPlayer.photoUrl == null
+                        ? AssetImage('assets/images/user.jpg')
+                        : NetworkImage(widget.ourPlayer.photoUrl),
+                    width: 320,
+                    height: 180,
+                    placeholder: AssetImage('assets/images/icon_new.png'),
                   ),
                   Center(
                     child: Text(
                       widget.ourPlayer.username + ", " + widget.ourPlayer.city,
                       style: TextStyle(
-                          fontFamily: 'Montserrat Bolds',
+                          fontFamily: 'Roboto Bold',
                           fontSize: 24.0,
                           color: kDarkestColor),
                     ),
@@ -102,73 +118,91 @@ class _UserDetailsState extends State<UserDetails> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                widget.ourPlayer.age,
-                style: TextStyle(fontFamily: 'DM Sans'),
+                widget.ourPlayer.age + " " + "years old".i18n,
+                style: TextStyle(
+                    fontFamily: 'Roboto', fontSize: 18, color: kDarkestColor),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    widget.ourPlayer.gender == 'Male'
+                        ? MdiIcons.genderMale
+                        : widget.ourPlayer.gender == 'Female'
+                            ? MdiIcons.genderFemale
+                            : MdiIcons.genderNonBinary,
+                    size: 24,
+                    color: kDarkestColor,
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  Text(
+                    widget.ourPlayer.gender,
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 18,
+                        color: kDarkestColor),
+                  ),
+                ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                widget.ourPlayer.gender,
+                widget.ourPlayer.sport + ", " + widget.ourPlayer.level,
                 style: TextStyle(
-                    fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
+                    fontFamily: 'Roboto', fontSize: 18, color: kDarkestColor),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                widget.ourPlayer.city,
+                "Motivation:".i18n + " " + widget.ourPlayer.motivation,
                 style: TextStyle(
-                    fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
+                    fontFamily: 'Roboto Light Italic',
+                    fontSize: 18,
+                    color: kHighlightAltColor),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.ourPlayer.sport,
-                style: TextStyle(
-                    fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.ourPlayer.level,
-                style: TextStyle(
-                    fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.ourPlayer.moment,
-                style: TextStyle(
-                    fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.ourPlayer.weekly,
-                style: TextStyle(
-                    fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.ourPlayer.motivation,
-                style: TextStyle(
-                    fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    MdiIcons.calendarBlank,
+                    size: 24,
+                    color: kDarkestColor,
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  Text(
+                    widget.ourPlayer.weekly + ", " + widget.ourPlayer.moment,
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 18,
+                        color: kDarkestColor),
+                  ),
+                ],
               ),
             ),
           ]),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: kDarkestColor,
           onPressed: () {
             sendMessage();
           },
-          child: Icon(Icons.textsms),
+          child: Icon(
+            MdiIcons.chat,
+            size: 24,
+            color: kForegroundColor,
+          ),
         ),
       ),
     );

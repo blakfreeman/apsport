@@ -1,3 +1,4 @@
+import 'package:aptus/screens/sign_up/add_profil_image.dart';
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/current_user_auth.dart';
@@ -92,8 +93,10 @@ void _signUpUser(
           weekly,
           motivation);
       if (_returnString == "success") {
-        Navigator.pushNamed(context, Home.id);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ImageCapture()));
       } else {
+        print("error");
         print(_returnString);
 //      Scaffold.of(context).showSnackBar(
 //        SnackBar(

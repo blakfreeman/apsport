@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aptus/services/constants.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ApUserCard extends StatelessWidget {
   ApUserCard(
@@ -34,10 +35,13 @@ class ApUserCard extends StatelessWidget {
                 topLeft: Radius.circular(20.0),
                 bottomLeft: Radius.circular(20.0),
               ),
-              child: Image.asset(
-                pic,
+              child: FadeInImage(
+                image: pic == null
+                    ? AssetImage('assets/images/user.jpg')
+                    : NetworkImage(pic),
                 width: 100,
                 height: 100,
+                placeholder: AssetImage('assets/images/icon_new.png'),
               ),
             ),
             Padding(

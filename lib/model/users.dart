@@ -13,22 +13,24 @@ class UsersModel {
 
 
 class OurPlayer {
-  String uid;
-  String username;
-  String email;
-  String gender;
-  String age;
-  String city;
-  String sport;
-  String level;
-  String moment;
-  String weekly;
-  String motivation;
-  Timestamp accountCreated;
+   String uid;
+   String photoUrl;
+   String username;
+   String email;
+   String gender;
+   String age;
+   String city;
+   String sport;
+   String level;
+   String moment;
+   String weekly;
+   String motivation;
+   Timestamp accountCreated;
 
 //take care of the carlibraces
   OurPlayer({
     this.uid,
+    this.photoUrl,
     this.username,
     this.email,
     this.gender,
@@ -46,6 +48,7 @@ class OurPlayer {
   factory OurPlayer.fromJson(dynamic json) {
     return OurPlayer(
       uid: json['uid'].toString(),
+      photoUrl : json['photoUrl'].toString(),
       username: json['username'],
       email: json['email'].toString(),
       gender: json['gender'],
@@ -57,19 +60,12 @@ class OurPlayer {
       motivation: json['motivation'],
       accountCreated: json['accountCreated'],
 
-
-
-
-
-
-
-
-
     );
   }
 
   Map<String, dynamic> toJson() => {
     'uid': uid,
+    'photoUrl': photoUrl,
     'username': username,
     'email': email,
     'gender': gender,
@@ -88,6 +84,7 @@ class OurPlayer {
   //creating a Player object from a firebase snapshot
   OurPlayer.fromSnapshot(DocumentSnapshot snapshot) :
         uid = snapshot['uid'],
+        photoUrl =snapshot['photoUrl'],
         username= snapshot['username'],
         email= snapshot['email'],
         age= snapshot['age'],
@@ -97,11 +94,13 @@ class OurPlayer {
         level= snapshot['level'],
         moment= snapshot['moment'],
         weekly= snapshot['weekly'],
-        motivation= snapshot['motivation'];
+        motivation= snapshot['motivation'],
+  accountCreated = snapshot['accountCreated'];
 
   factory OurPlayer.fromDocument(DocumentSnapshot doc) {
     return OurPlayer(
       uid: doc['uid'],
+      photoUrl:doc['photoUrl'],
       username: doc['username'],
       email: doc['email'],
       age: doc['age'],

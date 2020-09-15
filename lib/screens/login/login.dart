@@ -1,11 +1,7 @@
+import 'package:aptus/screens/player/home.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
 import 'package:aptus/services/data_base.dart';
-import 'package:aptus/services/helper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:aptus/screens/player/home.dart';
-import 'package:aptus/services/components.dart';
-import 'package:aptus/services/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:aptus/screens/graphics/apTextFormField.dart';
 import 'package:aptus/screens/login/login.i18n.dart';
@@ -198,7 +194,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               materialTapTargetSize:
                                   MaterialTapTargetSize.shrinkWrap,
                               onPressed: () {
-                                Navigator.pushNamed(context, SignUpScreen.id);
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => SignUpScreen(
+
+                                    )
+                                ));
                               },
                             ),
                           ],

@@ -2,6 +2,7 @@ import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/player/user_details.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/current_user_auth.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -215,22 +216,21 @@ class _MainePageState extends State<MainePage> {
     if (document['uid'] == loggedInUser.uid) {
       return Container();
     } else {
-    return  ApUserCard(
-      name: ourPlayer.username,
-      sport: ourPlayer.sport,
-      level: ourPlayer.level,
-      goal: ourPlayer.motivation,
-      pic: 'assets/images/anthony.jpg', // TODO get pic from database
-      role: 'Player', //TODO get the role from database
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => UserDetails(ourPlayer: ourPlayer)),
-        );
-      },
-    );
+      return ApUserCard(
+        name: ourPlayer.username,
+        sport: ourPlayer.sport,
+        level: ourPlayer.level,
+        goal: ourPlayer.motivation,
+        pic: ourPlayer.photoUrl,
+        role: 'Player', //TODO get the role from database
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => UserDetails(ourPlayer: ourPlayer)),
+          );
+        },
+      );
+    }
   }
 }
-}
-

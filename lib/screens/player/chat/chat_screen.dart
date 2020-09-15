@@ -50,6 +50,9 @@ class _ChatState extends State<Chat> {
               return MessageTile(
                 message: snapshot.data.documents[index].data["message"],
                 sendByMe: loggedInUser.email == snapshot.data.documents[index].data["sendBy"],
+                receiver: snapshot.data.documents[index].data["receiver"],
+
+
               );
             }) : Container();
       },
@@ -61,6 +64,7 @@ class _ChatState extends State<Chat> {
       Map<String, dynamic> chatMessageMap = {
         "sendBy": loggedInUser.email,
         "message": messageEditingController.text,
+        "receiver": widget.ourPlayer.username,
         'time': DateTime
             .now()
             .millisecondsSinceEpoch,
@@ -155,8 +159,9 @@ class _ChatState extends State<Chat> {
 class MessageTile extends StatelessWidget {
   final String message;
   final bool sendByMe;
+  final String receiver;
 
-  MessageTile({@required this.message, @required this.sendByMe});
+  MessageTile({@required this.message, @required this.sendByMe,this.receiver});
 
 
   @override
