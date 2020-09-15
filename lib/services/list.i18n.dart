@@ -151,8 +151,8 @@ extension Localization on String {
         "fr_be": "En semaine",
       } +
       {
-        "en_us": "Weekend'",
-        "fr_be": "Le weekend",
+        "en_us": "Weekends",
+        "fr_be": "Les weekends",
       } +
       {
         "en_us": "Both",

@@ -1,4 +1,3 @@
-
 import 'package:aptus/services/components.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/current_user_auth.dart';
@@ -95,6 +94,7 @@ void _signUpUser(
       if (_returnString == "success") {
         Navigator.pushNamed(context, Home.id);
       } else {
+        print(_returnString);
 //      Scaffold.of(context).showSnackBar(
 //        SnackBar(
 //          content: Text(_returnString),
@@ -161,6 +161,13 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                   controller: _passController,
                   hintText: "Password".i18n,
                   obscureText: true,
+                  validator: (val) {
+                    if (val.trim().length < 6 || val.isEmpty) {
+                      return "The password should be at least 6 characters long"
+                          .i18n;
+                    } else
+                      return null;
+                  },
                 ),
                 SizedBox(
                   height: 20.0,

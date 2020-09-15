@@ -78,7 +78,7 @@ class Moment {
 class WeekOrWeekEnd {
   List<String> best = [
     'Week'.i18n,
-    'Weekend'.i18n,
+    "Weekends".i18n,
     "Both".i18n,
     "I don't know".i18n,
   ];
