@@ -1,3 +1,8 @@
+import 'package:aptus/model/users.dart';
+import 'package:aptus/screens/graphics/apUserCard.dart';
+import 'package:aptus/screens/player/chat/chat_screen.dart';
+import 'package:aptus/screens/player/user_details.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 AppBar header(context, {bool isAppTitle = false, String titleText}) {
@@ -16,3 +21,5 @@ AppBar header(context, {bool isAppTitle = false, String titleText}) {
     backgroundColor: Colors.blueAccent,
   );
 }
+
+

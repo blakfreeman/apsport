@@ -1,4 +1,4 @@
-import 'package:aptus/services/header.dart';
+import 'package:aptus/services/widget.dart';
 import 'package:flutter/material.dart';
 
 class Event extends StatelessWidget {

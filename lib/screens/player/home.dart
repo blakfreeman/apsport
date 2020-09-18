@@ -2,6 +2,8 @@ import 'package:aptus/screens/player/chat/chat_room.dart';
 import 'package:aptus/screens/player/maine_page.dart';
 import 'package:aptus/screens/player/user_profile.dart';
 import 'package:aptus/services/constants.dart';
+import 'package:aptus/services/current_user_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 //import 'package:aptus/screens/profile/user_profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +12,7 @@ import 'package:aptus/screens/player/search.dart';
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/player/chat/chat_screen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 OurPlayer currentUser;
 
@@ -22,9 +25,18 @@ class Home extends StatefulWidget {
 class _Home2State extends State<Home> {
   PageController _pageController;
   int _page = 0;
+  final usersRef = Firestore.instance.collection('users');
+
+
 
   OurPlayer currentUser;
 
+getCurrentUser() async {
+  final uid = await Provider.of<CurrentUser>(context, listen: false)
+      .getCurrentUID();
+  DocumentSnapshot doc = await usersRef.document(uid).get();
+  currentUser = OurPlayer.fromDocument(doc);
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +45,7 @@ class _Home2State extends State<Home> {
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: <Widget>[
-          MainePage(),
+          MainePage(currentUser : currentUser),
           //Search(),
           Event(),
           ChatRoom(),
@@ -91,6 +103,7 @@ class _Home2State extends State<Home> {
   @override
   void initState() {
     super.initState();
+    getCurrentUser();
     _pageController = PageController(initialPage: 0);
   }
 

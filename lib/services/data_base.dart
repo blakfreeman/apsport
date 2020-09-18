@@ -44,6 +44,7 @@ class OurDatabase extends ChangeNotifier {
     try {
       DocumentSnapshot _docSnapshot = await usersRef.document(uid).get();
       retVal.uid = uid;
+      retVal.photoUrl = _docSnapshot.data["photoUrl"];
       retVal.username = _docSnapshot.data["username"];
       retVal.email = _docSnapshot.data["email"];
       retVal.age = _docSnapshot.data["age"];
@@ -155,4 +156,10 @@ return
         .snapshots();
   }
 
+  sportSearch(String str) {
+    Future<QuerySnapshot> allUsers = Firestore.instance
+        .collection('users')
+        .where('sport', isGreaterThanOrEqualTo: str)
+        .getDocuments();
+  }
 }
