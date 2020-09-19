@@ -1,5 +1,4 @@
 import 'package:aptus/model/users.dart';
-import 'package:aptus/screens/SplashScreen.dart';
 import 'package:aptus/screens/player/home.dart';
 import 'package:aptus/screens/login/login.dart';
 import 'package:aptus/screens/sign_up/Sign_up.dart';
