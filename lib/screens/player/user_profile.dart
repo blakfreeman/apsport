@@ -13,6 +13,10 @@ import 'package:provider/provider.dart';
 
 //add everyStep of the 1 man startup ep 47
 class Profile extends StatefulWidget {
+  final OurPlayer currentUser;
+
+  const Profile({Key key, this.currentUser});
+
   @override
   _ProfileState createState() => _ProfileState();
 }

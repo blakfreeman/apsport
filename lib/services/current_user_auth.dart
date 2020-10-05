@@ -1,9 +1,12 @@
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/sign_up/sign_up_form.dart';
 import 'package:aptus/services/data_base.dart';
+import 'package:aptus/services/progress.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:aptus/services/helper.dart';
 
@@ -54,6 +57,8 @@ final usersRef = Firestore.instance.collection('users');
       return null;
     }
   }
+
+
 
 
   Future<String> signOut() async {

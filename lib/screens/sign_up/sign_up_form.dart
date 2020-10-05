@@ -93,12 +93,11 @@ void _signUpUser(
           weekly,
           motivation);
       if (_returnString == "success") {
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => ImageCapture(
-
-            )
-        ));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ImageCapture()));
       } else {
+        print("error");
+        print(_returnString);
 //      Scaffold.of(context).showSnackBar(
 //        SnackBar(
 //          content: Text(_returnString),
@@ -165,6 +164,13 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                   controller: _passController,
                   hintText: "Password".i18n,
                   obscureText: true,
+                  validator: (val) {
+                    if (val.trim().length < 6 || val.isEmpty) {
+                      return "The password should be at least 6 characters long"
+                          .i18n;
+                    } else
+                      return null;
+                  },
                 ),
                 SizedBox(
                   height: 20.0,

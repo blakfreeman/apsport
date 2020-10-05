@@ -1,34 +1,43 @@
 import 'package:aptus/model/users.dart';
+import 'package:aptus/screens/graphics/apUserCard.dart';
 import 'package:aptus/screens/player/user_details.dart';
 import 'package:aptus/services/constants.dart';
 import 'package:aptus/services/data_base.dart';
 import 'package:aptus/services/progress.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aptus/screens/player/chat/chat_screen.dart';
 
+FirebaseUser loggedInUser;
 
 //search test working but not efficient enough
 class Search extends StatefulWidget {
-  static const String id = 'search';
-
   @override
   _SearchState createState() => _SearchState();
 }
 
-class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin<Search>
-{
+class _SearchState extends State<Search> {
   TextEditingController searchController = TextEditingController();
   Future<QuerySnapshot> searchResultsFuture;
-  OurDatabase databaseMethods =  OurDatabase();
-  sportSearch(String str) {
-    Future<QuerySnapshot> allUsers = Firestore.instance
-        .collection('users')
-        .where('sport', isGreaterThanOrEqualTo: str)
+  final _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  ///to add a possibility to convert the upercase and lowercase to a resulte anyway.
+  handleSearch(String query) {
+    Future<QuerySnapshot> users = Firestore.instance.collection('users')
+        .where("sport", isEqualTo : query.trim()
+    )
         .getDocuments();
     setState(() {
-      searchResultsFuture = allUsers;
+      searchResultsFuture = users;
     });
   }
 
@@ -36,64 +45,72 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin<Sear
     searchController.clear();
   }
 
-
-
-
-
-
-
-//Due to a bug or maybe I don't understand it well enough, It seams that I can't align the on the top left and top right my icons, so I remove them for now (temporally)
-  AppBar buildSearchField() {
-    return AppBar(automaticallyImplyLeading: false,backgroundColor: Colors.blueAccent,title:
-
-    TextFormField(
-      controller: searchController,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(fillColor: Colors.blueAccent,
-        border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-        hintText: "Search for a sport...",
-        hintStyle: TextStyle(color: Colors.white),
-        filled: true,
-        prefixIcon: Icon(Icons.search,color: Colors.white,),
-        suffixIcon: IconButton(
-          icon: Icon(Icons.clear,
-            color: Colors.white,),
-          onPressed: clearSearch,
-        ),
-      ),
-      onFieldSubmitted: sportSearch,
-    ),
-    );
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
 
-
-
+  AppBar buildSearchField() {
+    return AppBar(
+      backgroundColor: Colors.purple,
+      title: TextFormField(
+        controller: searchController,
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          fillColor: Colors.purple,
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          hintText: "Search for a sport...",
+          hintStyle: TextStyle(color: Colors.white),
+          filled: true,
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.white,
+          ),
+          suffixIcon: IconButton(
+            icon: Icon(
+              Icons.clear,
+              color: Colors.white,
+            ),
+            onPressed: clearSearch,
+          ),
+        ),
+        onFieldSubmitted: handleSearch,
+      ),
+    );
+  }
 
   Container buildNoContent() {
-    final Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
+      color: Colors.white,
       child: Center(
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            Column(children: <Widget>[
-              Text(
-                "No Users",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 30.0,
+            Column(
+              children: <Widget>[
+                Text(
+                  "No Users",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 30.0,
+                  ),
                 ),
-              ),
-            ],),
-
+              ],
+            ),
           ],
         ),
       ),
@@ -103,15 +120,15 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin<Sear
   buildSearchResults() {
     return FutureBuilder(
       future: searchResultsFuture,
-      builder: (context, dataSnapshot) {
-        if (!dataSnapshot.hasData) {
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
           return circularProgress();
         }
         List<UserResult> searchResults = [];
-        dataSnapshot.data.documents.forEach((document) {
-          OurPlayer eachUser = OurPlayer.fromDocument(document);
-          UserResult userResult = UserResult(eachUser);
-          searchResults.add(userResult);
+        snapshot.data.documents.forEach((doc) {
+          OurPlayer user = OurPlayer.fromDocument(doc);
+          UserResult searchResult = UserResult(user);
+          searchResults.add(searchResult);
         });
         return ListView(
           children: searchResults,
@@ -120,199 +137,75 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin<Sear
     );
   }
 
-
-  ///what we will use to show the results
-  Widget buildUserCard(BuildContext context, DocumentSnapshot document) {
-    final ourPlayer = OurPlayer.fromSnapshot(document);
-    return new Container(
-      width: 200,
-      child: Card(
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-        color: Colors.white,
-        child: InkWell(
-          onTap:  null,
-          child: Padding(
-            padding: const EdgeInsets.all(17.0),
-            child: Column(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Align(
-                        alignment: Alignment.center,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(ourPlayer.username, style: new TextStyle(fontSize: 20.0),),
-                    )),
-                    Row(
-                      children: <Widget>[
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundImage:
-                          AssetImage('assets/images/anthony.jpg'),
-                        ),
-                        Container(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                ourPlayer.sport,
-                                style: new TextStyle(
-                                  fontSize: 15.0, fontWeight: FontWeight.w900,),
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        Align(
-                            alignment: Alignment.centerLeft,child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(ourPlayer.level, style: new TextStyle(fontSize: 15.0),),
-                        )),
-                      ],
-                    ),
-                    Align( alignment: Alignment.centerLeft,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        ourPlayer.motivation,
-                        style: new TextStyle(
-                          fontSize: 15.0, fontWeight: FontWeight.w900,),
-                      ),
-                    ),
-                    ),
-
-                  ],
-
-                )
-
-
-              ],
-            ),
-
-          ),
-        ),
-      ),
-    );
-  }
-
-
-
-
-
-
-
-
-  bool get wantKeepAlive => true;
   @override
-  // ignore: must_call_super
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.8),
       appBar: buildSearchField(),
-      body: searchResultsFuture == null
-          ? buildNoContent()
-          : buildSearchResults(),
+      body:
+      searchResultsFuture == null ? buildNoContent() : buildSearchResults(),
     );
   }
 }
 
-
-///test version of the results
 class UserResult extends StatelessWidget {
-  final OurPlayer eachUser;
+  final OurPlayer user;
 
-  UserResult(this.eachUser);
-
-
-
+  UserResult(this.user);
 
   @override
   Widget build(BuildContext context) {
-
-    return Container(
-      width: 200,
-      child: Card(
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+    //current user can't see himself
+    if (user.uid == loggedInUser.uid) {
+      return Container();
+    } else {
+      return Container(
         color: Colors.white,
-        child: InkWell(
-          onTap:  () {
+        child: ApUserCard(
+          name: user.username,
+          sport: user.sport,
+          level: user.level,
+          goal: user.motivation,
+          pic: user.photoUrl,
+          role: 'Player',
+          //TODO get the role from database
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => UserDetails(ourPlayer: eachUser)),);},
-          child: Padding(
-            padding: const EdgeInsets.all(17.0),
-            child: Column(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Align(
-                        alignment: Alignment.center,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(eachUser.username, style: new TextStyle(fontSize: 20.0),),
-                    )),
-                    Row(
-                      children: <Widget>[
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundImage:
-                          AssetImage('assets/images/anthony.jpg'),
-                        ),
-                        Container(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                eachUser.sport,
-                                style: new TextStyle(
-                                  fontSize: 15.0, fontWeight: FontWeight.w900,),
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        Align(
-                            alignment: Alignment.centerLeft,child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(eachUser.level, style: new TextStyle(fontSize: 15.0),),
-                        )),
-                      ],
-                    ),
-                    Align( alignment: Alignment.centerLeft,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        eachUser.motivation,
-                        style: new TextStyle(
-                          fontSize: 15.0, fontWeight: FontWeight.w900,),
-                      ),
-                    ),
-                    ),],
-
-                ),
-                Spacer(),
-                GestureDetector(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12,vertical: 8),
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(24)
-                    ),
-                    child: Text("Message",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16
-                      ),),
-                  ),
-                )
-
-              ],
-            ),
-
-          ),
+                  builder: (context) => UserDetails(ourPlayer: user)),
+            );
+          },
         ),
-      ),
+      );
+    }
+  }
+}
+
+
+Widget buildUserCard(BuildContext context, DocumentSnapshot document) {
+  final ourPlayer = OurPlayer.fromSnapshot(document);
+  //current user can't see himself
+  if (document['uid'] == currentUser.uid) {
+    return Container();
+    // }if (document['sport'] == widget.currentUser.sport) {
+    //  return Container();
+  }  else {
+    return ApUserCard(
+      name: ourPlayer.username,
+      sport: ourPlayer.sport,
+      level: ourPlayer.level,
+      goal: ourPlayer.motivation,
+      pic: ourPlayer.photoUrl,
+      role: 'Player',
+      //TODO get the role from database
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => UserDetails(ourPlayer: ourPlayer)),
+        );
+      },
     );
   }
 }

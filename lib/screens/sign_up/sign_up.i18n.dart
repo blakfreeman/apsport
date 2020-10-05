@@ -39,6 +39,10 @@ extension Localization on String {
         "fr_be": "Mot de passe",
       } +
       {
+        "en_us": "The password should be at least 6 characters long",
+        "fr_be": "Le mot de passe doit avoir au moins 6 caractères",
+      } +
+      {
         "en_us": "Password confirmation",
         "fr_be": "Confirmation du mot de passe",
       } +

@@ -49,7 +49,7 @@ getCurrentUser() async {
           //Search(),
           Event(),
           ChatRoom(),
-          Profile(),
+          Profile(currentUser : currentUser),
         ],
       ),
       bottomNavigationBar: ClipRRect(

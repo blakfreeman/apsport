@@ -65,12 +65,18 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf
+    - family: Montserrat Bold
+      fonts:
+        - asset: assets/fonts/Montserrat-Bold.ttf
     - family: Roboto
       fonts:
         - asset: assets/fonts/Roboto-Regular.ttf
     - family: Roboto Light Italic
       fonts:
         - asset: assets/fonts/Roboto-LightItalic.ttf
+    - family: Roboto Bold
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
   assets:
     - assets/images/
 

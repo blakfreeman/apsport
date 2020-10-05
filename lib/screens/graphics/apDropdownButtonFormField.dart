@@ -35,6 +35,14 @@ class ApDropdownButtonFormField extends StatelessWidget {
       ),
       iconEnabledColor: kHighlightColor,
       isExpanded: true,
+      selectedItemBuilder: (BuildContext context) {
+        return items.map((DropdownMenuItem value) {
+          return Text(
+            value.value,
+            style: TextStyle(color: kForegroundColor),
+          );
+        }).toList();
+      },
     );
   }
 }

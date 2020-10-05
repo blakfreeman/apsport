@@ -1,7 +1,8 @@
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/player/user_details.dart';
-import 'package:aptus/services/constants.dart';
+import 'package:aptus/screens/player/search.dart';
 import 'package:aptus/services/current_user_auth.dart';
+import 'package:aptus/services/progress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +29,7 @@ enum Filter {
 
 class MainePage extends StatefulWidget {
   static const String id = 'maine_page';
-final OurPlayer currentUser;
+  final OurPlayer currentUser;
 
   const MainePage({Key key, this.currentUser}) : super(key: key);
   @override
@@ -44,8 +45,8 @@ class _MainePageState extends State<MainePage> {
   Filter selectedFilter;
   double latitude;
   double longitude;
-  final trainingMateIFollowRef = Firestore.instance.collection('Training Mate I follow');
-
+  final trainingMateIFollowRef = Firestore.instance.collection(
+      'Training Mate I follow');
 
   @override
   void initState() {
@@ -57,7 +58,6 @@ class _MainePageState extends State<MainePage> {
 
   // Set GeoLocation Data for the current user
   _addCurrentUserPosition() async {
-
     Location location = Location();
     final uid =
     await Provider.of<CurrentUser>(context, listen: false).getCurrentUID();
@@ -92,12 +92,11 @@ class _MainePageState extends State<MainePage> {
   }
 
 
-
-
-  Stream<QuerySnapshot> getUsersWithSameSport(
-      BuildContext context) async* {
-
-    final uid = await Provider.of(context).auth.getCurrentUID();
+  Stream<QuerySnapshot> getUsersWithSameSport(BuildContext context) async* {
+    final uid = await Provider
+        .of(context)
+        .auth
+        .getCurrentUID();
     final userSport = await Firestore.instance.document(uid)
         .collection('users').where('sport').getDocuments();
 
@@ -111,6 +110,23 @@ class _MainePageState extends State<MainePage> {
       BuildContext context) async* {
     final uid = await Provider.of<CurrentUser>(context).getCurrentUID();
     yield* Firestore.instance.document(uid).collection('users').snapshots();
+  }
+
+  buildCurrentUserPic() {
+    return FutureBuilder(
+        future: Firestore.instance.collection('users').document(widget.currentUser.uid).get(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return circularProgress();
+          }
+          OurPlayer user = OurPlayer.fromDocument(snapshot.data);
+          return CircleAvatar(
+            radius: 40.0,
+            backgroundColor: Colors.grey,
+            backgroundImage:
+            CachedNetworkImageProvider(user.photoUrl),
+          );
+        });
   }
 
   @override
@@ -139,17 +155,12 @@ class _MainePageState extends State<MainePage> {
                         left: 20,
                       ),
                     ),
-                    CircleAvatar(
-                      backgroundImage: ExactAssetImage(
-                          'assets/images/anthony.jpg'), //TODO get picture from database
-                      minRadius: 35,
-                      maxRadius: 40,
-                    ),
+                    buildCurrentUserPic(),
                     Expanded(
                       child: Center(
                         child: Image.asset(
                           'assets/images/icon_new.png',
-                          height: 70.0,
+                          height: 50.0,
                         ),
                       ),
                     ),
@@ -180,7 +191,6 @@ class _MainePageState extends State<MainePage> {
                         onPressed: () {
                           setState(() {
                             selectedFilter = Filter.sameSport;
-
                           });
                           Expanded(
                             child: StreamBuilder(
@@ -196,7 +206,7 @@ class _MainePageState extends State<MainePage> {
                                       buildUserCard(context,
                                           snapshot.data.documents[index]));
                                 }),
-                          );//TODO implement filter
+                          ); //TODO implement filter
                         },
                         icon: Icons.fitness_center,
                       ),
@@ -205,7 +215,6 @@ class _MainePageState extends State<MainePage> {
                         onPressed: () {
                           setState(() {
                             selectedFilter = Filter.following;
-
                           });
                           print("filter like"); //TODO implement filter
                         },
@@ -216,7 +225,6 @@ class _MainePageState extends State<MainePage> {
                         onPressed: () {
                           setState(() {
                             selectedFilter = Filter.myCoach;
-
                           });
                           print("filter coach"); //TODO implement filter
                         },
@@ -260,6 +268,15 @@ class _MainePageState extends State<MainePage> {
             ),
           ),
         ),
+    floatingActionButton: FloatingActionButton(
+    child: Icon(Icons.search),
+    onPressed: () {
+    Navigator.push(
+    context, MaterialPageRoute(builder: (context) => Search()));
+    },
+    ),
+
+
       ),
     );
   }
@@ -269,19 +286,22 @@ class _MainePageState extends State<MainePage> {
     //current user can't see himself
     if (document['uid'] == loggedInUser.uid) {
       return Container();
-    } else {
+      // }if (document['sport'] == widget.currentUser.sport) {
+      //  return Container();
+    }  else {
       return ApUserCard(
         name: ourPlayer.username,
         sport: ourPlayer.sport,
         level: ourPlayer.level,
         goal: ourPlayer.motivation,
         pic: ourPlayer.photoUrl,
-        role: 'Player', //TODO get the role from database
+        role: 'Player',
+        //TODO get the role from database
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => UserDetails(ourPlayer: ourPlayer)),
+                builder: (context) => UserDetails(ourPlayer: ourPlayer,),),
           );
         },
       );

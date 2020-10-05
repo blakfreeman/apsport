@@ -7,6 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aptus/screens/player/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:aptus/screens/player/user_details.i18n.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+//import 'package:aptus/screens/sign_up/sign_up.i18n.dart';
+//import 'package:aptus/services/list.i18n.dart';
 
 class UserDetails extends StatefulWidget {
   final OurPlayer ourPlayer;
@@ -22,28 +26,35 @@ class UserDetails extends StatefulWidget {
 class _UserDetailsState extends State<UserDetails> {
   OurDatabase ourDatabase = OurDatabase();
 
+  sendMessage() async {
+    final currentUserEmail =
+        await Provider.of<CurrentUser>(context, listen: false)
+            .getCurrentEmail();
+    List<String> users = [currentUserEmail, widget.ourPlayer.username];
 
-  sendMessage() async{
-    final currentUserEmail = await Provider.of<CurrentUser>(context, listen: false).getCurrentEmail();
-    List<String> users = [currentUserEmail,widget.ourPlayer.email];
+    String chatRoomId = getChatRoomId(currentUserEmail, widget.ourPlayer.username);
 
-    String chatRoomId = getChatRoomId(currentUserEmail,widget.ourPlayer.email);
-///test pour garder un seul nom dans le chat room id
+    ///test pour garder un seul nom dans le chat room id
 
     Map<String, dynamic> chatRoom = {
       "users": users,
-      "chatRoomId" : chatRoomId,
+      "chatRoomId": chatRoomId,
     };
 
     ourDatabase.addChatRoom(chatRoom, chatRoomId);
 
-    Navigator.push(context, MaterialPageRoute(
+    Navigator.push(
+      context,
+      MaterialPageRoute(
         builder: (context) => Chat(
-          chatRoomId: chatRoomId,ourPlayer: widget.ourPlayer, currentUserEmail: currentUserEmail,
-        )
-    ));
-
+          chatRoomId: chatRoomId,
+          ourPlayer: widget.ourPlayer,
+          currentUserEmail: currentUserEmail,
+        ),
+      ),
+    );
   }
+
   getChatRoomId(String a, String b) {
     if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
       return "$b\_$a";
@@ -52,107 +63,147 @@ class _UserDetailsState extends State<UserDetails> {
     }
   }
 
-
-
   @override
   Widget build(
-      BuildContext context,
-      ) {
-    return Scaffold(
-      body: Center(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Text('Details'),
-              backgroundColor: Colors.blueAccent,
-              expandedHeight: 350.0,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Image.network(widget.ourPlayer.photoUrl),
+    BuildContext context,
+  ) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/images/background_3.jpg'),
+            fit: BoxFit.cover),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: kDarkestColor, //change your color here
+          ),
+          elevation: 0,
+          title: Text(
+            'Player Profile',
+            style: TextStyle(
+                color: kDarkGreen, fontSize: 20.0, fontFamily: 'Roboto'),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+        ),
+        body: SingleChildScrollView(
+          //scrollDirection: Axis.horizontal,
+          child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  FadeInImage(
+                    image: widget.ourPlayer.photoUrl == null
+                        ? AssetImage('assets/images/user.jpg')
+                        : NetworkImage(widget.ourPlayer.photoUrl),
+                    width: 320,
+                    height: 180,
+                    placeholder: AssetImage('assets/images/icon_new.png'),
+                  ),
+                  Center(
+                    child: Text(
+                      widget.ourPlayer.username + ", " + widget.ourPlayer.city,
+                      style: TextStyle(
+                          fontFamily: 'Roboto Bold',
+                          fontSize: 24.0,
+                          color: kDarkestColor),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SliverFixedExtentList(
-              itemExtent: 60.00,
-              delegate: SliverChildListDelegate([
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.ourPlayer.username,
-                    style: TextStyle(
-                        fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                widget.ourPlayer.age + " " + "years old".i18n,
+                style: TextStyle(
+                    fontFamily: 'Roboto', fontSize: 18, color: kDarkestColor),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    widget.ourPlayer.gender == 'Male'
+                        ? MdiIcons.genderMale
+                        : widget.ourPlayer.gender == 'Female'
+                            ? MdiIcons.genderFemale
+                            : MdiIcons.genderNonBinary,
+                    size: 24,
+                    color: kDarkestColor,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.ourPlayer.age,
-                    style: TextStyle(fontFamily: 'DM Sans'),
+                  SizedBox(
+                    width: 8.0,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
+                  Text(
                     widget.ourPlayer.gender,
                     style: TextStyle(
-                        fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
+                        fontFamily: 'Roboto',
+                        fontSize: 18,
+                        color: kDarkestColor),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.ourPlayer.city,
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                widget.ourPlayer.sport + ", " + widget.ourPlayer.level,
+                style: TextStyle(
+                    fontFamily: 'Roboto', fontSize: 18, color: kDarkestColor),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Motivation:".i18n + " " + widget.ourPlayer.motivation,
+                style: TextStyle(
+                    fontFamily: 'Roboto Light Italic',
+                    fontSize: 18,
+                    color: kHighlightAltColor),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    MdiIcons.calendarBlank,
+                    size: 24,
+                    color: kDarkestColor,
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  Text(
+                    widget.ourPlayer.weekly + ", " + widget.ourPlayer.moment,
                     style: TextStyle(
-                        fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
+                        fontFamily: 'Roboto',
+                        fontSize: 18,
+                        color: kDarkestColor),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.ourPlayer.sport,
-                    style: TextStyle(
-                        fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.ourPlayer.level,
-                    style: TextStyle(
-                        fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.ourPlayer.moment,
-                    style: TextStyle(
-                        fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.ourPlayer.weekly,
-                    style: TextStyle(
-                        fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.ourPlayer.motivation,
-                    style: TextStyle(
-                        fontFamily: 'DM Sans', fontWeight: FontWeight.w900),
-                  ),
-                ),
-              ]),
-            )
-          ],
+                ],
+              ),
+            ),
+          ]),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () { sendMessage();
-        },
-        child: Icon(Icons.textsms),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: kDarkestColor,
+          onPressed: () {
+            sendMessage();
+          },
+          child: Icon(
+            MdiIcons.chat,
+            size: 24,
+            color: kForegroundColor,
+          ),
+        ),
       ),
     );
   }

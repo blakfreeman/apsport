@@ -105,6 +105,7 @@ class _ChatState extends State<Chat> {
       return buildButton( text: 'no',function: handleAddTrainingMat);
     }
   }
+
   handleAddTrainingMat ()  async {
 
     setState(() {
@@ -180,7 +181,7 @@ class _ChatState extends State<Chat> {
     });
 
   }
-
+/// TO delet if everythings works well
   void getCurrentUser() async {
     try {
       final user = await _auth.currentUser();

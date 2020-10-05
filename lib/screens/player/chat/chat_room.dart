@@ -70,6 +70,7 @@ class ChatRoomsTile extends StatelessWidget {
   final String chatRoomId;
   final OurPlayer ourPlayer;
 
+
   ChatRoomsTile({this.userName,@required this.chatRoomId,this.ourPlayer});
 
   @override
@@ -78,7 +79,7 @@ class ChatRoomsTile extends StatelessWidget {
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
             builder: (context) => Chat(
-              chatRoomId: chatRoomId,
+              chatRoomId: chatRoomId, ourPlayer: ourPlayer,
 
             )
         ));
@@ -94,7 +95,7 @@ class ChatRoomsTile extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.blueAccent,
                   borderRadius: BorderRadius.circular(30)),
-              child: Text(userName.substring(0, 1),
+              child: Text(ourPlayer.username.substring(0, 1),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
@@ -105,7 +106,7 @@ class ChatRoomsTile extends StatelessWidget {
             SizedBox(
               width: 12,
             ),
-            Text(userName,
+            Text(ourPlayer.username,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                     color: Colors.white,
