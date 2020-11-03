@@ -1,121 +1,90 @@
+import 'package:aptus/model/contact.dart';
 import 'package:aptus/model/users.dart';
+import 'package:aptus/screens/player/chat/quiet_box.dart';
+import 'package:aptus/screens/player/chat/user_circle.dart';
+import 'package:aptus/services/chat_methods.dart';
 import 'package:aptus/services/constants.dart';
-import 'package:aptus/services/current_user_auth.dart';
 import 'package:aptus/services/data_base.dart';
 import 'package:aptus/services/widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:aptus/screens/player/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
 
-class ChatRoom extends StatefulWidget {
-  @override
-  _ChatRoomState createState() => _ChatRoomState();
-}
+import 'contact_view.dart';
+import 'new_chat_button.dart';
 
-class _ChatRoomState extends State<ChatRoom> {
-  Stream chatRooms;
 
-  Widget chatRoomsList() {
-    return StreamBuilder(
-      stream: chatRooms,
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-            itemCount: snapshot.data.documents.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return ChatRoomsTile(
-                userName: snapshot.data.documents[index].data['chatRoomId']
-                    .toString().replaceAll("_", "")
-                    .replaceAll( Constants.myName,""),
-                chatRoomId: snapshot.data.documents[index].data["chatRoomId"],
-              );
-            })
-            : Container();
-      },
-    );
-  }
+class ChatListScreen extends StatelessWidget {
 
-  @override
-  void initState() {
-    getUserInfogetChats();
-    super.initState();
-  }
-
-  getUserInfogetChats() async {
-    Constants.myName = await Provider.of<CurrentUser>(context, listen: false).getCurrentEmail() ;
-    OurDatabase().getUserChats(Constants.myName).then((snapshots) {
-      setState(() {
-        chatRooms = snapshots;
-        print(
-            "we got the data + ${chatRooms.toString()} this is name  ${Constants.myName}");
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:header(context, titleText: 'LockRoom'),
-      body: Container(
-        child: chatRoomsList(),
-      ),
-
-    );
-  }
-}
-
-class ChatRoomsTile extends StatelessWidget {
-  final String userName;
-  final String chatRoomId;
-  final OurPlayer ourPlayer;
-
-
-  ChatRoomsTile({this.userName,@required this.chatRoomId,this.ourPlayer});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => Chat(
-              chatRoomId: chatRoomId, ourPlayer: ourPlayer,
-
-            )
-        ));
-      },
-      child: Container(
-        color: Colors.black26,
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        child: Row(
-          children: [
-            Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.circular(30)),
-              child: Text(ourPlayer.username.substring(0, 1),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'OverpassRegular',
-                      fontWeight: FontWeight.w300)),
+    return  Scaffold(
+        backgroundColor: UniversalVariables.blackColor,
+        appBar: SkypeAppBar(
+          title: UserCircle(),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, "/search_screen");
+              },
             ),
-            SizedBox(
-              width: 12,
+            IconButton(
+              icon: Icon(
+                Icons.more_vert,
+                color: Colors.white,
+              ),
+              onPressed: () {},
             ),
-            Text(ourPlayer.username,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontFamily: 'OverpassRegular',
-                    fontWeight: FontWeight.w300)),
           ],
         ),
-      ),
+        floatingActionButton: NewChatButton(),
+        body: ChatListContainer(),
+
+    );
+  }
+}
+
+class ChatListContainer extends StatelessWidget {
+  final ChatMethods _chatMethods = ChatMethods();
+
+  @override
+  Widget build(BuildContext context) {
+    final OurDatabase userProvider = Provider.of<OurDatabase>(context);
+
+    return Container(
+      child: StreamBuilder<QuerySnapshot>(
+          stream: _chatMethods.fetchContacts(
+            userId: userProvider.getUser.uid,
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var docList = snapshot.data.documents;
+
+              if (docList.isEmpty) {
+                return QuietBox(
+                  heading: "This is where all the contacts are listed",
+                  subtitle:
+                  "Search for your friends and family to start calling or chatting with them",
+                );
+              }
+              return ListView.builder(
+                padding: EdgeInsets.all(10),
+                itemCount: docList.length,
+                itemBuilder: (context, index) {
+                  Contact contact = Contact.fromMap(docList[index].data);
+
+                  return ContactView(contact);
+                },
+              );
+            }
+
+            return Center(child: CircularProgressIndicator());
+          }),
     );
   }
 }

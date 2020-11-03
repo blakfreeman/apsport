@@ -1,6 +1,7 @@
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/sign_up/sign_up_form.dart';
 import 'package:aptus/services/data_base.dart';
+import 'package:aptus/services/enum.dart';
 import 'package:aptus/services/progress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -126,4 +127,19 @@ final usersRef = Firestore.instance.collection('users');
 
     return retVal;
   }
+
+
+  ViewState _viewState = ViewState.IDLE;
+  ViewState get getViewState => _viewState;
+
+  void setToLoading() {
+    _viewState = ViewState.LOADING;
+    notifyListeners();
+  }
+
+  void setToIdle() {
+    _viewState = ViewState.IDLE;
+    notifyListeners();
+  }
+
 }

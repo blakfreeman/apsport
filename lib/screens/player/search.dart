@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aptus/screens/player/chat/chat_screen.dart';
 
+import 'home.dart';///make it correct
+
 FirebaseUser loggedInUser;
 
 //search test working but not efficient enough

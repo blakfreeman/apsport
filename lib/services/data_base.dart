@@ -2,6 +2,8 @@ import 'package:aptus/model/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'auth_methods.dart';
+
 class OurDatabase extends ChangeNotifier {
   final String uid;
 
@@ -162,5 +164,18 @@ return
         .collection('users')
         .where('sport', isGreaterThanOrEqualTo: str)
         .getDocuments();
+  }
+
+
+
+  OurPlayer _user;
+  AuthMethods _authMethods = AuthMethods();
+
+  OurPlayer get getUser => _user;
+
+  Future<void> refreshUser() async {
+    OurPlayer user = await _authMethods.getUserDetails();
+    _user = user;
+    notifyListeners();
   }
 }

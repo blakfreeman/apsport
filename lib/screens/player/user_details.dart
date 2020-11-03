@@ -26,42 +26,6 @@ class UserDetails extends StatefulWidget {
 class _UserDetailsState extends State<UserDetails> {
   OurDatabase ourDatabase = OurDatabase();
 
-  sendMessage() async {
-    final currentUserEmail =
-        await Provider.of<CurrentUser>(context, listen: false)
-            .getCurrentEmail();
-    List<String> users = [currentUserEmail, widget.ourPlayer.username];
-
-    String chatRoomId = getChatRoomId(currentUserEmail, widget.ourPlayer.username);
-
-    ///test pour garder un seul nom dans le chat room id
-
-    Map<String, dynamic> chatRoom = {
-      "users": users,
-      "chatRoomId": chatRoomId,
-    };
-
-    ourDatabase.addChatRoom(chatRoom, chatRoomId);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Chat(
-          chatRoomId: chatRoomId,
-          ourPlayer: widget.ourPlayer,
-          currentUserEmail: currentUserEmail,
-        ),
-      ),
-    );
-  }
-
-  getChatRoomId(String a, String b) {
-    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
-      return "$b\_$a";
-    } else {
-      return "$a\_$b";
-    }
-  }
 
   @override
   Widget build(
@@ -135,10 +99,6 @@ class _UserDetailsState extends State<UserDetails> {
                             ? MdiIcons.genderFemale
                             : MdiIcons.genderNonBinary,
                     size: 24,
-                    color: kDarkestColor,
-                  ),
-                  SizedBox(
-                    width: 8.0,
                   ),
                   Text(
                     widget.ourPlayer.gender,
@@ -196,7 +156,12 @@ class _UserDetailsState extends State<UserDetails> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: kDarkestColor,
           onPressed: () {
-            sendMessage();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChatScreen(
+                      receiver: widget.ourPlayer,
+                    )));
           },
           child: Icon(
             MdiIcons.chat,

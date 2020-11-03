@@ -48,7 +48,7 @@ getCurrentUser() async {
           MainePage(currentUser : currentUser),
           //Search(),
           Event(),
-          ChatRoom(),
+          ChatScreen(),
           Profile(currentUser : currentUser),
         ],
       ),

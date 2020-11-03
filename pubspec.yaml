@@ -44,6 +44,8 @@ dependencies:
   path_provider: ^1.6.14
   image: ^2.0.7
   uuid: ^2.2.2
+  shimmer: 1.0.1
+  emoji_picker: ^0.1.0
 
 
 

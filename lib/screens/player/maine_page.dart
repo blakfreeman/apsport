@@ -1,6 +1,9 @@
 import 'package:aptus/model/users.dart';
 import 'package:aptus/screens/player/user_details.dart';
 import 'package:aptus/screens/player/search.dart';
+import 'package:aptus/screens/player/user_details.dart';
+import 'package:aptus/screens/player/user_details.dart';
+import 'package:aptus/screens/player/user_details.dart';
 import 'package:aptus/services/current_user_auth.dart';
 import 'package:aptus/services/progress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
